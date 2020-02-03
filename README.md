@@ -108,9 +108,10 @@ java -jar target/rfc7807-1.0-SNAPSHOT-runner.jar
 
 ```bash
 mvn package -P native
-./target/rfc7807-1.0-SNAPSHOT.jar
+./target/rfc7807-1.0-SNAPSHOT-runner
 ```
 
 ## Todos
 
-- Jackson Support
+- Jackson support
+- more unit tests
