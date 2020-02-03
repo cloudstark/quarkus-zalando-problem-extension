@@ -1,0 +1,10 @@
+---
+name: "Zalando Problem"
+metadata:
+  keywords:
+    - "problem"
+    - "rfc7807"
+  categories:
+    - "miscellaneous"
+  guide: "https://quarkus.io/guides/tika"
+  status: "stable"
