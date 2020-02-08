@@ -17,12 +17,10 @@
 package solutions.cloudstark.quarkus.problem.runtime;
 
 import org.zalando.problem.Problem;
-import org.zalando.problem.ProblemBuilder;
 import org.zalando.problem.Status;
 import org.zalando.problem.ThrowableProblem;
 
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -35,12 +33,9 @@ public class RestExceptionMapper implements ExceptionMapper<Exception> {
     @Context
     private UriInfo uriInfo;
 
-    public final static MediaType PROBLEM_JSON = MediaType.valueOf("application/problem+json");
-
     @Override
     public Response toResponse(Exception ex) {
         final ThrowableProblem throwableProblem;
-        ProblemBuilder builder = Problem.builder();
         if (ex instanceof ThrowableProblem) {
             throwableProblem = (ThrowableProblem)ex;
         } else {
@@ -53,7 +48,7 @@ public class RestExceptionMapper implements ExceptionMapper<Exception> {
         }
         return Response
                 .status(throwableProblem.getStatus().getStatusCode())
-                .type(PROBLEM_JSON)
+                .type(MediaType.APPLICATION_PROBLEM_JSON)
                 .entity(throwableProblem)
                 .build();
     }
