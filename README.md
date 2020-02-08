@@ -1,5 +1,9 @@
 # Quarkus Problem (RFC7807) Extension
 
+Extension to use [Zalando Problem](https://github.com/zalando/problem) in your [Quarkus](https://quarkus.io) JAX-RS
+application. The extension will register an `ExceptionMapper` that is responsible to map catched Exceptions into 
+valid `application/problem+json` to be used as the payload of the HTTP Response.
+
 ## Getting Started
 
 The Problem extension is not available in Maven Central. For now you have to clone the repository and install the
@@ -86,12 +90,31 @@ public class CalcResource {
                 Arrays.asList(new Violation("name", "must not be null")));
     }
 
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
-        return "hello";
-    }
+}
+```
 
+Note: You will have to adjust the generated test in `src/test/java` - otherwise the build will fail.
+
+```
+$ curl localhost:8080/calc/20:0
+{
+  "status": 500,
+  "title": "/ by zero",
+  "detail": "java.lang.ArithmeticException: / by zero",
+  "instance": "/calc/20:0"
+}
+
+$ curl localhost:8080/calc/violation
+{
+  "type": "https://zalando.github.io/problem/constraint-violation",
+  "status": 400,
+  "title": "Constraint Violation",
+  "violations": [
+    {
+      "field": "name",
+      "message": "must not be null"
+    }
+  ]
 }
 ```
 
