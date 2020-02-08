@@ -21,8 +21,11 @@ import org.zalando.problem.AbstractThrowableProblem;
 import javax.json.bind.serializer.JsonbSerializer;
 import javax.json.bind.serializer.SerializationContext;
 import javax.json.stream.JsonGenerator;
+import java.net.URI;
 
 public class DefaultProblemSerializer implements JsonbSerializer<AbstractThrowableProblem> {
+
+    private static final URI DEFAUL_URI = URI.create("about:blank");
 
     public DefaultProblemSerializer() {
     }
@@ -30,9 +33,15 @@ public class DefaultProblemSerializer implements JsonbSerializer<AbstractThrowab
     @Override
     public void serialize(AbstractThrowableProblem problem, JsonGenerator generator, SerializationContext ctx) {
         generator.writeStartObject();
-        generator.write("type", problem.getType().toASCIIString());
-        generator.write("status", problem.getStatus().getStatusCode());
-        generator.write("title", problem.getTitle());
+        if (problem.getType() != null && !problem.getType().equals(DEFAUL_URI)) {
+            generator.write("type", problem.getType().toASCIIString());
+        }
+        if (problem.getStatus() != null) {
+            generator.write("status", problem.getStatus().getStatusCode());
+        }
+        if (problem.getTitle() != null) {
+            generator.write("title", problem.getTitle());
+        }
         if (problem.getDetail() != null) {
             generator.write("detail", problem.getDetail());
         }
