@@ -1,0 +1,13 @@
+# Using https://google.github.io/styleguide/javaguide.html
+# - Generic download https://github.com/google/styleguide
+# - IntelliJ plugin https://plugins.jetbrains.com/plugin/8527-google-java-format
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2

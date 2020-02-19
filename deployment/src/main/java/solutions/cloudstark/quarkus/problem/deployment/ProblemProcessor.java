@@ -22,6 +22,7 @@ import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.ReflectiveClassBuildItem;
 import io.quarkus.jsonb.spi.JsonbSerializerBuildItem;
 import io.quarkus.resteasy.common.spi.ResteasyJaxrsProviderBuildItem;
+import java.util.Arrays;
 import org.zalando.problem.DefaultProblem;
 import org.zalando.problem.violations.ConstraintViolationProblem;
 import org.zalando.problem.violations.Violation;
@@ -30,37 +31,35 @@ import solutions.cloudstark.quarkus.problem.runtime.jsonb.ConstraintViolationPro
 import solutions.cloudstark.quarkus.problem.runtime.jsonb.DefaultProblemSerializer;
 import solutions.cloudstark.quarkus.problem.runtime.jsonb.ViolationSerializer;
 
-import java.util.Arrays;
-
 public class ProblemProcessor {
 
-    static final String FEATURE_NAME = "problem";
+  static final String FEATURE_NAME = "problem";
 
-    @BuildStep
-    void registerReflectiveClasses(BuildProducer<ReflectiveClassBuildItem> reflectives) {
-        reflectives.produce(ReflectiveClassBuildItem.builder(
-                DefaultProblem.class,
-                ConstraintViolationProblem.class,
-                Violation.class).build());
-    }
+  @BuildStep
+  void registerReflectiveClasses(final BuildProducer<ReflectiveClassBuildItem> reflectives) {
+    reflectives.produce(
+        ReflectiveClassBuildItem.builder(
+                DefaultProblem.class, ConstraintViolationProblem.class, Violation.class)
+            .build());
+  }
 
-    @BuildStep
-    FeatureBuildItem createFeatureItem() {
-        return new FeatureBuildItem(FEATURE_NAME);
-    }
+  @BuildStep
+  FeatureBuildItem createFeatureItem() {
+    return new FeatureBuildItem(FEATURE_NAME);
+  }
 
-    @BuildStep
-    void registerJsonbSerializers(BuildProducer<JsonbSerializerBuildItem> serializers) {
-        serializers.produce(new JsonbSerializerBuildItem(
-                Arrays.asList(
-                        DefaultProblemSerializer.class.getName(),
-                        ViolationSerializer.class.getName(),
-                        ConstraintViolationProblemSerializer.class.getName())));
-    }
+  @BuildStep
+  void registerJsonbSerializers(final BuildProducer<JsonbSerializerBuildItem> serializers) {
+    serializers.produce(
+        new JsonbSerializerBuildItem(
+            Arrays.asList(
+                DefaultProblemSerializer.class.getName(),
+                ViolationSerializer.class.getName(),
+                ConstraintViolationProblemSerializer.class.getName())));
+  }
 
-    @BuildStep
-    void registerJaxrsProviders(BuildProducer<ResteasyJaxrsProviderBuildItem> providers) {
-        providers.produce(new ResteasyJaxrsProviderBuildItem(RestExceptionMapper.class.getName()));
-    }
-
+  @BuildStep
+  void registerJaxrsProviders(final BuildProducer<ResteasyJaxrsProviderBuildItem> providers) {
+    providers.produce(new ResteasyJaxrsProviderBuildItem(RestExceptionMapper.class.getName()));
+  }
 }

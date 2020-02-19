@@ -16,24 +16,24 @@
 
 package solutions.cloudstark.quarkus.problem.runtime.jsonb;
 
-import org.zalando.problem.violations.ConstraintViolationProblem;
-
 import javax.json.bind.serializer.JsonbSerializer;
 import javax.json.bind.serializer.SerializationContext;
 import javax.json.stream.JsonGenerator;
+import org.zalando.problem.violations.ConstraintViolationProblem;
 
-public class ConstraintViolationProblemSerializer implements JsonbSerializer<ConstraintViolationProblem> {
+public class ConstraintViolationProblemSerializer
+    implements JsonbSerializer<ConstraintViolationProblem> {
 
-    public ConstraintViolationProblemSerializer() {
-    }
+  public ConstraintViolationProblemSerializer() {}
 
-    @Override
-    public void serialize(ConstraintViolationProblem problem, JsonGenerator generator, SerializationContext ctx) {
-        generator.writeStartObject();
-        generator.write("type", problem.getType().toASCIIString());
-        generator.write("status", problem.getStatus().getStatusCode());
-        generator.write("title", problem.getTitle());
-        ctx.serialize("violations", problem.getViolations(), generator);
-        generator.writeEnd();
-    }
+  @Override
+  public void serialize(
+      final ConstraintViolationProblem problem, final JsonGenerator generator, final SerializationContext ctx) {
+    generator.writeStartObject();
+    generator.write("type", problem.getType().toASCIIString());
+    generator.write("status", problem.getStatus().getStatusCode());
+    generator.write("title", problem.getTitle());
+    ctx.serialize("violations", problem.getViolations(), generator);
+    generator.writeEnd();
+  }
 }

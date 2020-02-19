@@ -16,22 +16,19 @@
 
 package solutions.cloudstark.quarkus.problem.runtime.jsonb;
 
-import org.zalando.problem.violations.Violation;
-
 import javax.json.bind.serializer.JsonbSerializer;
 import javax.json.bind.serializer.SerializationContext;
 import javax.json.stream.JsonGenerator;
+import org.zalando.problem.violations.Violation;
 
 public class ViolationSerializer implements JsonbSerializer<Violation> {
 
-    public ViolationSerializer() {
-    }
-
-    @Override
-    public void serialize(Violation violation, JsonGenerator generator, SerializationContext ctx) {
-        generator.writeStartObject();
-        generator.write("field", violation.getField());
-        generator.write("message", violation.getMessage());
-        generator.writeEnd();
-    }
+  @Override
+  public void serialize(
+      final Violation violation, final JsonGenerator generator, final SerializationContext ctx) {
+    generator.writeStartObject();
+    generator.write("field", violation.getField());
+    generator.write("message", violation.getMessage());
+    generator.writeEnd();
+  }
 }
