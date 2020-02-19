@@ -16,41 +16,38 @@
 
 package solutions.cloudstark.quarkus.problem.runtime;
 
-import org.zalando.problem.Problem;
-import org.zalando.problem.Status;
-import org.zalando.problem.ThrowableProblem;
-
+import java.net.URI;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
-import java.net.URI;
+import org.zalando.problem.Problem;
+import org.zalando.problem.Status;
+import org.zalando.problem.ThrowableProblem;
 
 @Provider
 public class RestExceptionMapper implements ExceptionMapper<Exception> {
 
-    @Context
-    private UriInfo uriInfo;
+  @Context private UriInfo uriInfo;
 
-    @Override
-    public Response toResponse(Exception ex) {
-        final ThrowableProblem throwableProblem;
-        if (ex instanceof ThrowableProblem) {
-            throwableProblem = (ThrowableProblem)ex;
-        } else {
-            throwableProblem = Problem.builder()
-                    .withStatus(Status.INTERNAL_SERVER_ERROR)
-                    .withTitle(ex.getMessage())
-                    .withDetail(ex.toString())
-                    .withInstance(URI.create(uriInfo.getPath()))
-                    .build();
-        }
-        return Response
-                .status(throwableProblem.getStatus().getStatusCode())
-                .type(MediaType.APPLICATION_PROBLEM_JSON)
-                .entity(throwableProblem)
-                .build();
+  @Override
+  public Response toResponse(final Exception ex) {
+    final ThrowableProblem throwableProblem;
+    if (ex instanceof ThrowableProblem) {
+      throwableProblem = (ThrowableProblem) ex;
+    } else {
+      throwableProblem =
+          Problem.builder()
+              .withStatus(Status.INTERNAL_SERVER_ERROR)
+              .withTitle(ex.getMessage())
+              .withDetail(ex.toString())
+              .withInstance(URI.create(uriInfo.getPath()))
+              .build();
     }
-
+    return Response.status(throwableProblem.getStatus().getStatusCode())
+        .type(MediaType.APPLICATION_PROBLEM_JSON)
+        .entity(throwableProblem)
+        .build();
+  }
 }

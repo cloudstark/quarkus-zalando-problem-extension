@@ -18,9 +18,8 @@ package solutions.cloudstark.quarkus.problem.runtime;
 
 public class MediaType {
 
-    public final static String APPLICATION_PROBLEM_JSON = "application/problem+json";
+  public static final String APPLICATION_PROBLEM_JSON = "application/problem+json";
 
-    public final static javax.ws.rs.core.MediaType APPLICATION_PROBLEM_JSON_TYPE
-            = javax.ws.rs.core.MediaType.valueOf(APPLICATION_PROBLEM_JSON);
-
+  public static final javax.ws.rs.core.MediaType APPLICATION_PROBLEM_JSON_TYPE =
+      javax.ws.rs.core.MediaType.valueOf(APPLICATION_PROBLEM_JSON);
 }
