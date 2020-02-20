@@ -21,11 +21,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>solutions.cloudstark.quarkus</groupId>
-        <artifactId>quarkus-problem-parent</artifactId>
+        <artifactId>quarkus-zalando-problem-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>quarkus-problem-deployment</artifactId>
+    <artifactId>quarkus-zalando-problem-deployment</artifactId>
     <name>Quarkus - Zalando Problem (RFC7807) - Deployment</name>
 
     <dependencies>
