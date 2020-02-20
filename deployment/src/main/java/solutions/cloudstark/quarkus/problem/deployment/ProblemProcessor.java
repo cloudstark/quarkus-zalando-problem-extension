@@ -27,7 +27,10 @@ import io.quarkus.deployment.builditem.nativeimage.ReflectiveClassBuildItem;
 import io.quarkus.jsonb.spi.JsonbSerializerBuildItem;
 import io.quarkus.resteasy.common.spi.ResteasyJaxrsProviderBuildItem;
 import solutions.cloudstark.quarkus.problem.runtime.ConstraintViolationExceptionMapper;
+import solutions.cloudstark.quarkus.problem.runtime.ForbiddenExceptionMapper;
+import solutions.cloudstark.quarkus.problem.runtime.NotFoundExceptionMapper;
 import solutions.cloudstark.quarkus.problem.runtime.RestExceptionMapper;
+import solutions.cloudstark.quarkus.problem.runtime.UnAuthorizedExceptionMapper;
 import solutions.cloudstark.quarkus.problem.runtime.jsonb.ConstraintViolationProblemSerializer;
 import solutions.cloudstark.quarkus.problem.runtime.jsonb.DefaultProblemSerializer;
 import solutions.cloudstark.quarkus.problem.runtime.jsonb.ViolationSerializer;
@@ -63,6 +66,10 @@ public class ProblemProcessor {
   void registerJaxrsProviders(final BuildProducer<ResteasyJaxrsProviderBuildItem> providers) {
     providers.produce(
         new ResteasyJaxrsProviderBuildItem(ConstraintViolationExceptionMapper.class.getName()));
+    providers.produce(new ResteasyJaxrsProviderBuildItem(ForbiddenExceptionMapper.class.getName()));
+    providers.produce(new ResteasyJaxrsProviderBuildItem(NotFoundExceptionMapper.class.getName()));
+    providers.produce(
+        new ResteasyJaxrsProviderBuildItem(UnAuthorizedExceptionMapper.class.getName()));
     providers.produce(new ResteasyJaxrsProviderBuildItem(RestExceptionMapper.class.getName()));
   }
 }
