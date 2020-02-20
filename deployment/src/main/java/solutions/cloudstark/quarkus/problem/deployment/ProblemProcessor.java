@@ -26,6 +26,7 @@ import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.ReflectiveClassBuildItem;
 import io.quarkus.jsonb.spi.JsonbSerializerBuildItem;
 import io.quarkus.resteasy.common.spi.ResteasyJaxrsProviderBuildItem;
+import solutions.cloudstark.quarkus.problem.runtime.ConstraintViolationExceptionMapper;
 import solutions.cloudstark.quarkus.problem.runtime.ForbiddenExceptionMapper;
 import solutions.cloudstark.quarkus.problem.runtime.NotFoundExceptionMapper;
 import solutions.cloudstark.quarkus.problem.runtime.RestExceptionMapper;
@@ -63,6 +64,8 @@ public class ProblemProcessor {
 
   @BuildStep
   void registerJaxrsProviders(final BuildProducer<ResteasyJaxrsProviderBuildItem> providers) {
+    providers.produce(
+        new ResteasyJaxrsProviderBuildItem(ConstraintViolationExceptionMapper.class.getName()));
     providers.produce(new ResteasyJaxrsProviderBuildItem(ForbiddenExceptionMapper.class.getName()));
     providers.produce(new ResteasyJaxrsProviderBuildItem(NotFoundExceptionMapper.class.getName()));
     providers.produce(
