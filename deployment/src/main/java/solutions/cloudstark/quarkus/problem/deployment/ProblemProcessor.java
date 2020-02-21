@@ -40,7 +40,7 @@ import solutions.cloudstark.quarkus.problem.runtime.jsonb.ViolationSerializer;
 
 public class ProblemProcessor {
 
-  private static final String FEATURE_NAME = "problem";
+  private static final String FEATURE_NAME = "zalando-problem";
 
   private static final List<Class<? extends ExceptionMapper<?>>> EXCEPTION_MAPPER_CLASSES =
       Arrays.asList(
