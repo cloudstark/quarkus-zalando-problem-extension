@@ -31,9 +31,9 @@ import org.zalando.problem.ThrowableProblem;
 
 @Provider
 @Priority(Priorities.USER)
-public class UnAuthorizedExceptionMapper implements ExceptionMapper<UnauthorizedException> {
+public class UnauthorizedExceptionMapper implements ExceptionMapper<UnauthorizedException> {
 
-  @Context private UriInfo uriInfo;
+  @Context UriInfo uriInfo;
 
   @Override
   public Response toResponse(final UnauthorizedException exception) {

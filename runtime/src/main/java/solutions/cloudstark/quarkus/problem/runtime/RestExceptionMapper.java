@@ -29,7 +29,7 @@ import org.zalando.problem.ThrowableProblem;
 @Provider
 public class RestExceptionMapper implements ExceptionMapper<Exception> {
 
-  @Context private UriInfo uriInfo;
+  @Context UriInfo uriInfo;
 
   @Override
   public Response toResponse(final Exception ex) {

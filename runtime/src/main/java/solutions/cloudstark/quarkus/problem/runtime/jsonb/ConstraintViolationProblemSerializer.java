@@ -24,8 +24,6 @@ import org.zalando.problem.violations.ConstraintViolationProblem;
 public class ConstraintViolationProblemSerializer
     implements JsonbSerializer<ConstraintViolationProblem> {
 
-  public ConstraintViolationProblemSerializer() {}
-
   @Override
   public void serialize(
       final ConstraintViolationProblem problem,

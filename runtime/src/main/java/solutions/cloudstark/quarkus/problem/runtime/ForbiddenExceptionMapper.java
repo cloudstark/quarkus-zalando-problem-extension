@@ -33,7 +33,7 @@ import org.zalando.problem.ThrowableProblem;
 @Priority(Priorities.USER)
 public class ForbiddenExceptionMapper implements ExceptionMapper<ForbiddenException> {
 
-  @Context private UriInfo uriInfo;
+  @Context UriInfo uriInfo;
 
   @Override
   public Response toResponse(final ForbiddenException exception) {

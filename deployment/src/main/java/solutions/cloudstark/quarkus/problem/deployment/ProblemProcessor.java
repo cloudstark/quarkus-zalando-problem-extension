@@ -30,7 +30,7 @@ import solutions.cloudstark.quarkus.problem.runtime.ConstraintViolationException
 import solutions.cloudstark.quarkus.problem.runtime.ForbiddenExceptionMapper;
 import solutions.cloudstark.quarkus.problem.runtime.NotFoundExceptionMapper;
 import solutions.cloudstark.quarkus.problem.runtime.RestExceptionMapper;
-import solutions.cloudstark.quarkus.problem.runtime.UnAuthorizedExceptionMapper;
+import solutions.cloudstark.quarkus.problem.runtime.UnauthorizedExceptionMapper;
 import solutions.cloudstark.quarkus.problem.runtime.jsonb.ConstraintViolationProblemSerializer;
 import solutions.cloudstark.quarkus.problem.runtime.jsonb.DefaultProblemSerializer;
 import solutions.cloudstark.quarkus.problem.runtime.jsonb.ViolationSerializer;
@@ -69,7 +69,7 @@ public class ProblemProcessor {
     providers.produce(new ResteasyJaxrsProviderBuildItem(ForbiddenExceptionMapper.class.getName()));
     providers.produce(new ResteasyJaxrsProviderBuildItem(NotFoundExceptionMapper.class.getName()));
     providers.produce(
-        new ResteasyJaxrsProviderBuildItem(UnAuthorizedExceptionMapper.class.getName()));
+        new ResteasyJaxrsProviderBuildItem(UnauthorizedExceptionMapper.class.getName()));
     providers.produce(new ResteasyJaxrsProviderBuildItem(RestExceptionMapper.class.getName()));
   }
 }

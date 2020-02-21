@@ -26,8 +26,6 @@ public class DefaultProblemSerializer implements JsonbSerializer<AbstractThrowab
 
   private static final URI DEFAULT_URI = URI.create("about:blank");
 
-  public DefaultProblemSerializer() {}
-
   @Override
   public void serialize(
       final AbstractThrowableProblem problem,

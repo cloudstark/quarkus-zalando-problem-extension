@@ -33,7 +33,7 @@ import org.zalando.problem.ThrowableProblem;
 @Priority(Priorities.USER)
 public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundException> {
 
-  @Context private UriInfo uriInfo;
+  @Context UriInfo uriInfo;
 
   @Override
   public Response toResponse(final NotFoundException exception) {
