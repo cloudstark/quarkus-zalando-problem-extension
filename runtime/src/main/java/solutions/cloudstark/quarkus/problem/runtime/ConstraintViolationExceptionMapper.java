@@ -34,8 +34,8 @@ public class ConstraintViolationExceptionMapper
     implements ExceptionMapper<ConstraintViolationException> {
 
   @Override
-  public Response toResponse(ConstraintViolationException exception) {
-    List<Violation> violations =
+  public Response toResponse(final ConstraintViolationException exception) {
+    final List<Violation> violations =
         exception.getConstraintViolations().stream()
             .map(c -> new Violation(c.getPropertyPath().toString(), c.getMessage()))
             .collect(Collectors.toList());

@@ -16,16 +16,16 @@
 
 package solutions.cloudstark.quarkus.problem.deployment;
 
-import java.util.Arrays;
-import org.zalando.problem.DefaultProblem;
-import org.zalando.problem.violations.ConstraintViolationProblem;
-import org.zalando.problem.violations.Violation;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.ReflectiveClassBuildItem;
 import io.quarkus.jsonb.spi.JsonbSerializerBuildItem;
 import io.quarkus.resteasy.common.spi.ResteasyJaxrsProviderBuildItem;
+import java.util.Arrays;
+import org.zalando.problem.DefaultProblem;
+import org.zalando.problem.violations.ConstraintViolationProblem;
+import org.zalando.problem.violations.Violation;
 import solutions.cloudstark.quarkus.problem.runtime.ConstraintViolationExceptionMapper;
 import solutions.cloudstark.quarkus.problem.runtime.ForbiddenExceptionMapper;
 import solutions.cloudstark.quarkus.problem.runtime.NotFoundExceptionMapper;

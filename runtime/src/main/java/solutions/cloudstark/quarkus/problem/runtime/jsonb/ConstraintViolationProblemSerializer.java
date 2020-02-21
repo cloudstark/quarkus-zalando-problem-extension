@@ -28,7 +28,9 @@ public class ConstraintViolationProblemSerializer
 
   @Override
   public void serialize(
-      final ConstraintViolationProblem problem, final JsonGenerator generator, final SerializationContext ctx) {
+      final ConstraintViolationProblem problem,
+      final JsonGenerator generator,
+      final SerializationContext ctx) {
     generator.writeStartObject();
     generator.write("type", problem.getType().toASCIIString());
     generator.write("status", problem.getStatus().getStatusCode());
