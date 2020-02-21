@@ -51,7 +51,7 @@
         </dependency>
         <dependency>
             <groupId>solutions.cloudstark.quarkus</groupId>
-            <artifactId>quarkus-problem</artifactId>
+            <artifactId>quarkus-zalando-problem</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
