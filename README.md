@@ -1,7 +1,7 @@
 # Quarkus Problem (RFC7807) Extension
 
 Extension to use [Zalando Problem](https://github.com/zalando/problem) in your [Quarkus](https://quarkus.io) JAX-RS
-application. The extension will register an `ExceptionMapper` that is responsible to map catched Exceptions into 
+application. The extension will register an `ExceptionMapper` that is responsible to map catched Exceptions into
 valid `application/problem+json` to be used as the payload of the HTTP Response.
 
 ## Getting Started
@@ -19,7 +19,7 @@ mvn io.quarkus:quarkus-maven-plugin:1.2.0.Final:create \
     -DprojectArtifactId=rfc7807 \
     -DclassName="org.acme.rest.json.CalcResource" \
     -Dpath="/calc" \
-    -Dextensions="resteasy-jsonb" 
+    -Dextensions="resteasy-jsonb"
 ```
 
 Add the following dependency to your `pom.xml`:
@@ -27,7 +27,7 @@ Add the following dependency to your `pom.xml`:
 ```xml
 <dependency>
       <groupId>solutions.cloudstark.quarkus</groupId>
-      <artifactId>quarkus-problem</artifactId>
+      <artifactId>quarkus-zalando-problem</artifactId>
       <version>0.0.1-SNAPSHOT</version>
 </dependency>
 ```
@@ -86,7 +86,7 @@ public class CalcResource {
     @Path("/violation")
     @Produces(TEXT_PLAIN)
     public void violation() {
-        throw new ConstraintViolationProblem(Status.BAD_REQUEST, 
+        throw new ConstraintViolationProblem(Status.BAD_REQUEST,
                 Arrays.asList(new Violation("name", "must not be null")));
     }
 
@@ -120,7 +120,7 @@ $ curl localhost:8080/calc/violation
 
 ### Run
 
-#### JVM Mode  
+#### JVM Mode
 
 ```bash
 mvn package
