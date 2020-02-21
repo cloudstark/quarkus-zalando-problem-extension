@@ -27,12 +27,12 @@ import org.zalando.problem.Status;
 import org.zalando.problem.ThrowableProblem;
 
 @Provider
-public class RestExceptionMapper implements ExceptionMapper<Exception> {
+public class RestExceptionMapper implements ExceptionMapper<Throwable> {
 
   @Context UriInfo uriInfo;
 
   @Override
-  public Response toResponse(final Exception ex) {
+  public Response toResponse(final Throwable ex) {
     final ThrowableProblem throwableProblem;
     if (ex instanceof ThrowableProblem) {
       throwableProblem = (ThrowableProblem) ex;
