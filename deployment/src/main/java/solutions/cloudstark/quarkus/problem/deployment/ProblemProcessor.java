@@ -37,7 +37,7 @@ import solutions.cloudstark.quarkus.problem.runtime.jsonb.ViolationSerializer;
 
 public class ProblemProcessor {
 
-  static final String FEATURE_NAME = "problem";
+  static final String FEATURE_NAME = "zalando-problem";
 
   @BuildStep
   void registerReflectiveClasses(final BuildProducer<ReflectiveClassBuildItem> reflectives) {
