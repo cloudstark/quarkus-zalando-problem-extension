@@ -22,7 +22,7 @@
 
     <groupId>solutions.cloudstark.quarkus</groupId>
     <version>0.0.1-SNAPSHOT</version>
-    <artifactId>quarkus-problem-parent</artifactId>
+    <artifactId>quarkus-zalando-problem-parent</artifactId>
     <name>Quarkus - Zalando Problem (RFC7807) Parent</name>
     <packaging>pom</packaging>
 
@@ -50,7 +50,7 @@
         <dependencies>
             <dependency>
                 <groupId>solutions.cloudstark.quarkus</groupId>
-                <artifactId>quarkus-problem</artifactId>
+                <artifactId>quarkus-zalando-problem</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
