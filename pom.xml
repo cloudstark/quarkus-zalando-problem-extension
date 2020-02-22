@@ -21,7 +21,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>solutions.cloudstark.quarkus</groupId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2-SNAPSHOT</version>
   <artifactId>quarkus-zalando-problem-parent</artifactId>
   <name>Quarkus - Zalando Problem (RFC7807) Parent</name>
   <packaging>pom</packaging>
