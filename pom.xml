@@ -62,6 +62,11 @@
       <name>cloudstark-maven</name>
       <url>https://api.bintray.com/maven/cloudstark/maven/quarkus-zalando-problem/;publish=1</url>
     </repository>
+    <snapshotRepository>
+      <id>oss-jfrog-artifactory</id>
+      <name>oss-jfrog-artifactory-snapshots</name>
+      <url>https://oss.jfrog.org/artifactory/oss-snapshot-local</url>
+    </snapshotRepository>
   </distributionManagement>
 
   <build>
