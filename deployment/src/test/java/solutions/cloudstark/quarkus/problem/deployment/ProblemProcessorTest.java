@@ -11,13 +11,4 @@ class ProblemProcessorTest {
   void createFeatureItem() {
     Assertions.assertNotNull(PROBLEM_PROCESSOR.createFeatureItem().getInfo());
   }
-
-  @Test
-  void registerReflectiveClasses() {}
-
-  @Test
-  void registerJsonbSerializers() {}
-
-  @Test
-  void registerJaxRsProviders() {}
 }
