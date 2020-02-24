@@ -26,11 +26,11 @@ public class DefaultProblemSerializer implements JsonbSerializer<AbstractThrowab
 
   private static final URI DEFAULT_URI = URI.create("about:blank");
 
-  public DefaultProblemSerializer() {}
-
   @Override
   public void serialize(
-      final AbstractThrowableProblem problem, final JsonGenerator generator, final SerializationContext ctx) {
+      final AbstractThrowableProblem problem,
+      final JsonGenerator generator,
+      final SerializationContext ctx) {
     generator.writeStartObject();
     if (problem.getType() != null && !problem.getType().equals(DEFAULT_URI)) {
       generator.write("type", problem.getType().toASCIIString());

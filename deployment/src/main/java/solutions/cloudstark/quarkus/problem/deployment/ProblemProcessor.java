@@ -16,28 +16,45 @@
 
 package solutions.cloudstark.quarkus.problem.deployment;
 
-import java.util.Arrays;
-import org.zalando.problem.DefaultProblem;
-import org.zalando.problem.violations.ConstraintViolationProblem;
-import org.zalando.problem.violations.Violation;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.ReflectiveClassBuildItem;
 import io.quarkus.jsonb.spi.JsonbSerializerBuildItem;
 import io.quarkus.resteasy.common.spi.ResteasyJaxrsProviderBuildItem;
+import java.util.Arrays;
+import java.util.List;
+import javax.ws.rs.ext.ExceptionMapper;
+import org.zalando.problem.DefaultProblem;
+import org.zalando.problem.violations.ConstraintViolationProblem;
+import org.zalando.problem.violations.Violation;
 import solutions.cloudstark.quarkus.problem.runtime.ConstraintViolationExceptionMapper;
 import solutions.cloudstark.quarkus.problem.runtime.ForbiddenExceptionMapper;
 import solutions.cloudstark.quarkus.problem.runtime.NotFoundExceptionMapper;
 import solutions.cloudstark.quarkus.problem.runtime.RestExceptionMapper;
-import solutions.cloudstark.quarkus.problem.runtime.UnAuthorizedExceptionMapper;
+import solutions.cloudstark.quarkus.problem.runtime.ThrowableProblemMapper;
+import solutions.cloudstark.quarkus.problem.runtime.UnauthorizedExceptionMapper;
 import solutions.cloudstark.quarkus.problem.runtime.jsonb.ConstraintViolationProblemSerializer;
 import solutions.cloudstark.quarkus.problem.runtime.jsonb.DefaultProblemSerializer;
 import solutions.cloudstark.quarkus.problem.runtime.jsonb.ViolationSerializer;
 
 public class ProblemProcessor {
 
-  static final String FEATURE_NAME = "zalando-problem";
+  private static final String FEATURE_NAME = "zalando-problem";
+
+  private static final List<Class<? extends ExceptionMapper<?>>> EXCEPTION_MAPPER_CLASSES =
+      Arrays.asList(
+          ConstraintViolationExceptionMapper.class,
+          ForbiddenExceptionMapper.class,
+          NotFoundExceptionMapper.class,
+          UnauthorizedExceptionMapper.class,
+          ThrowableProblemMapper.class,
+          RestExceptionMapper.class);
+
+  @BuildStep
+  FeatureBuildItem createFeatureItem() {
+    return new FeatureBuildItem(FEATURE_NAME);
+  }
 
   @BuildStep
   void registerReflectiveClasses(final BuildProducer<ReflectiveClassBuildItem> reflectives) {
@@ -45,11 +62,6 @@ public class ProblemProcessor {
         ReflectiveClassBuildItem.builder(
                 DefaultProblem.class, ConstraintViolationProblem.class, Violation.class)
             .build());
-  }
-
-  @BuildStep
-  FeatureBuildItem createFeatureItem() {
-    return new FeatureBuildItem(FEATURE_NAME);
   }
 
   @BuildStep
@@ -63,13 +75,9 @@ public class ProblemProcessor {
   }
 
   @BuildStep
-  void registerJaxrsProviders(final BuildProducer<ResteasyJaxrsProviderBuildItem> providers) {
-    providers.produce(
-        new ResteasyJaxrsProviderBuildItem(ConstraintViolationExceptionMapper.class.getName()));
-    providers.produce(new ResteasyJaxrsProviderBuildItem(ForbiddenExceptionMapper.class.getName()));
-    providers.produce(new ResteasyJaxrsProviderBuildItem(NotFoundExceptionMapper.class.getName()));
-    providers.produce(
-        new ResteasyJaxrsProviderBuildItem(UnAuthorizedExceptionMapper.class.getName()));
-    providers.produce(new ResteasyJaxrsProviderBuildItem(RestExceptionMapper.class.getName()));
+  void registerJaxRsProviders(final BuildProducer<ResteasyJaxrsProviderBuildItem> providers) {
+    EXCEPTION_MAPPER_CLASSES.forEach(
+        exceptionMapper ->
+            providers.produce(new ResteasyJaxrsProviderBuildItem(exceptionMapper.getName())));
   }
 }

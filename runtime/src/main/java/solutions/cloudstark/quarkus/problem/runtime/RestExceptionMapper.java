@@ -27,24 +27,20 @@ import org.zalando.problem.Status;
 import org.zalando.problem.ThrowableProblem;
 
 @Provider
-public class RestExceptionMapper implements ExceptionMapper<Exception> {
+public class RestExceptionMapper implements ExceptionMapper<Throwable> {
 
-  @Context private UriInfo uriInfo;
+  @Context UriInfo uriInfo;
 
   @Override
-  public Response toResponse(final Exception ex) {
-    final ThrowableProblem throwableProblem;
-    if (ex instanceof ThrowableProblem) {
-      throwableProblem = (ThrowableProblem) ex;
-    } else {
-      throwableProblem =
-          Problem.builder()
-              .withStatus(Status.INTERNAL_SERVER_ERROR)
-              .withTitle(ex.getMessage())
-              .withDetail(ex.toString())
-              .withInstance(URI.create(uriInfo.getPath()))
-              .build();
-    }
+  public Response toResponse(final Throwable throwable) {
+    final ThrowableProblem throwableProblem =
+        Problem.builder()
+            .withStatus(Status.INTERNAL_SERVER_ERROR)
+            .withTitle(throwable.getMessage())
+            .withDetail(throwable.toString())
+            .withInstance(URI.create(uriInfo.getPath()))
+            .build();
+
     return Response.status(throwableProblem.getStatus().getStatusCode())
         .type(MediaType.APPLICATION_PROBLEM_JSON)
         .entity(throwableProblem)

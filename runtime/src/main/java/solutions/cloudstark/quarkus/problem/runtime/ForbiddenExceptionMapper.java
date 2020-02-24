@@ -16,6 +16,7 @@
 
 package solutions.cloudstark.quarkus.problem.runtime;
 
+import io.quarkus.security.ForbiddenException;
 import java.net.URI;
 import javax.annotation.Priority;
 import javax.ws.rs.Priorities;
@@ -27,17 +28,16 @@ import javax.ws.rs.ext.Provider;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
 import org.zalando.problem.ThrowableProblem;
-import io.quarkus.security.ForbiddenException;
 
 @Provider
 @Priority(Priorities.USER)
 public class ForbiddenExceptionMapper implements ExceptionMapper<ForbiddenException> {
 
-  @Context private UriInfo uriInfo;
+  @Context UriInfo uriInfo;
 
   @Override
-  public Response toResponse(ForbiddenException exception) {
-    ThrowableProblem throwableProblem =
+  public Response toResponse(final ForbiddenException exception) {
+    final ThrowableProblem throwableProblem =
         Problem.builder()
             .withStatus(Status.FORBIDDEN)
             .withTitle(exception.getMessage())

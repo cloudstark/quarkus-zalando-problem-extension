@@ -24,11 +24,11 @@ import org.zalando.problem.violations.ConstraintViolationProblem;
 public class ConstraintViolationProblemSerializer
     implements JsonbSerializer<ConstraintViolationProblem> {
 
-  public ConstraintViolationProblemSerializer() {}
-
   @Override
   public void serialize(
-      final ConstraintViolationProblem problem, final JsonGenerator generator, final SerializationContext ctx) {
+      final ConstraintViolationProblem problem,
+      final JsonGenerator generator,
+      final SerializationContext ctx) {
     generator.writeStartObject();
     generator.write("type", problem.getType().toASCIIString());
     generator.write("status", problem.getStatus().getStatusCode());
