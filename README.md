@@ -14,7 +14,7 @@ extension in your local maven repository. Then follow these steps to write and d
 Create a new project using the Quarkus [archetype](https://quarkus.io/guides/getting-started-guide#bootstrapping-the-project):
 
 ```bash
-mvn io.quarkus:quarkus-maven-plugin:1.2.0.Final:create \
+mvn io.quarkus:quarkus-maven-plugin:1.2.1.Final:create \
     -DprojectGroupId=org.acme.rfc7807 \
     -DprojectArtifactId=rfc7807 \
     -DclassName="org.acme.rest.json.CalcResource" \
@@ -28,7 +28,7 @@ Add the following dependency to your `pom.xml`:
 <dependency>
       <groupId>solutions.cloudstark.quarkus</groupId>
       <artifactId>quarkus-zalando-problem</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <version>0.0.2-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -89,7 +89,6 @@ public class CalcResource {
         throw new ConstraintViolationProblem(Status.BAD_REQUEST,
                 Arrays.asList(new Violation("name", "must not be null")));
     }
-
 }
 ```
 

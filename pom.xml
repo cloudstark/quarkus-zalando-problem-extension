@@ -14,48 +14,29 @@
   ~    See the License for the specific language governing permissions and
   ~    limitations under the License.
   -->
-
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>solutions.cloudstark.quarkus</groupId>
-  <version>0.0.2-SNAPSHOT</version>
   <artifactId>quarkus-zalando-problem-parent</artifactId>
-  <name>Quarkus - Zalando Problem (RFC7807) Parent</name>
+  <version>0.0.2-SNAPSHOT</version>
   <packaging>pom</packaging>
 
+  <name>Quarkus - Zalando Problem (RFC7807) Parent</name>
   <inceptionYear>2020</inceptionYear>
   <licenses>
     <license>
+      <distribution>repo</distribution>
       <name>The Apache Software License, Version 2.0</name>
       <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>repo</distribution>
     </license>
   </licenses>
-
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <quarkus.version>1.2.1.Final</quarkus.version>
-  </properties>
 
   <modules>
     <module>runtime</module>
     <module>deployment</module>
+    <module>integration-test</module>
   </modules>
-
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>solutions.cloudstark.quarkus</groupId>
-        <artifactId>quarkus-zalando-problem</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
 
   <distributionManagement>
     <repository>
@@ -70,20 +51,71 @@
     </snapshotRepository>
   </distributionManagement>
 
+  <properties>
+    <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+    <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+    <maven.compiler-plugin.version>3.8.1</maven.compiler-plugin.version>
+    <maven.compiler.parameters>true</maven.compiler.parameters>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <quarkus-plugin.version>1.2.1.Final</quarkus-plugin.version>
+    <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
+    <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
+    <quarkus.platform.version>1.2.1.Final</quarkus.platform.version>
+    <tidy-maven-plugin.version>1.1.0</tidy-maven-plugin.version>
+    <zalando-problem-violations.version>0.25.2</zalando-problem-violations.version>
+    <zalando-problem.version>0.23.0</zalando-problem.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>${quarkus.platform.group-id}</groupId>
+        <artifactId>${quarkus.platform.artifact-id}</artifactId>
+        <version>${quarkus.platform.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <version>3.2.1</version>
-        <executions>
+      <plugin><executions>
           <execution>
-            <id>attach-sources</id>
             <goals>
               <goal>jar</goal>
             </goals>
+            <id>attach-sources</id>
           </execution>
         </executions>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>${maven-source-plugin.version}</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <systemProperties>
+            <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+          </systemProperties>
+        </configuration>
+        <version>${maven-surefire-plugin.version}</version>
+      </plugin>
+      <plugin><executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <id>validate</id>
+            <phase>validate</phase>
+          </execution>
+        </executions>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>tidy-maven-plugin</artifactId>
+        <version>${tidy-maven-plugin.version}</version>
       </plugin>
     </plugins>
   </build>
