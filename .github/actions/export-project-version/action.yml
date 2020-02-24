@@ -1,0 +1,6 @@
+# action.yml
+name: Export project version
+description: Export version of a maven project
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
