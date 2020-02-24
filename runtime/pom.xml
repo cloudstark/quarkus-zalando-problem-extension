@@ -22,7 +22,7 @@
   <parent>
     <groupId>solutions.cloudstark.quarkus</groupId>
     <artifactId>quarkus-zalando-problem-parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
   </parent>
 
   <artifactId>quarkus-zalando-problem</artifactId>
@@ -98,15 +98,6 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.22.1</version>
-        <configuration>
-          <systemProperties>
-            <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
-          </systemProperties>
-        </configuration>
       </plugin>
     </plugins>
   </build>

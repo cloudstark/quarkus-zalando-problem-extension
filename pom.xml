@@ -16,44 +16,74 @@
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <groupId>solutions.cloudstark.quarkus</groupId>
-    <version>0.0.1-SNAPSHOT</version>
-    <artifactId>quarkus-zalando-problem-parent</artifactId>
-    <name>Quarkus - Zalando Problem (RFC7807) Parent</name>
-    <packaging>pom</packaging>
+  <groupId>solutions.cloudstark.quarkus</groupId>
+  <version>0.0.2-SNAPSHOT</version>
+  <artifactId>quarkus-zalando-problem-parent</artifactId>
+  <name>Quarkus - Zalando Problem (RFC7807) Parent</name>
+  <packaging>pom</packaging>
 
-    <licenses>
-        <license>
-            <name>The Apache Software License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
 
-    <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <quarkus.version>1.2.1.Final</quarkus.version>
+  </properties>
 
-        <quarkus.version>1.2.1.Final</quarkus.version>
-    </properties>
+  <modules>
+    <module>runtime</module>
+    <module>deployment</module>
+  </modules>
 
-    <modules>
-        <module>runtime</module>
-        <module>deployment</module>
-    </modules>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>solutions.cloudstark.quarkus</groupId>
+        <artifactId>quarkus-zalando-problem</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>solutions.cloudstark.quarkus</groupId>
-                <artifactId>quarkus-zalando-problem</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+  <distributionManagement>
+    <repository>
+      <id>bintray-cloudstark-maven</id>
+      <name>cloudstark-maven</name>
+      <url>https://api.bintray.com/maven/cloudstark/maven/quarkus-zalando-problem/;publish=1</url>
+    </repository>
+    <snapshotRepository>
+      <id>oss-jfrog-artifactory</id>
+      <name>oss-jfrog-artifactory-snapshots</name>
+      <url>https://oss.jfrog.org/artifactory/oss-snapshot-local</url>
+    </snapshotRepository>
+  </distributionManagement>
 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.2.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

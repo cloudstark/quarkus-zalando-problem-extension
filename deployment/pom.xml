@@ -22,7 +22,7 @@
   <parent>
     <groupId>solutions.cloudstark.quarkus</groupId>
     <artifactId>quarkus-zalando-problem-parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
   </parent>
 
   <artifactId>quarkus-zalando-problem-deployment</artifactId>
@@ -51,7 +51,7 @@
     </dependency>
     <dependency>
       <groupId>solutions.cloudstark.quarkus</groupId>
-      <artifactId>quarkus-problem</artifactId>
+      <artifactId>quarkus-zalando-problem</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
