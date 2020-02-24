@@ -1,5 +1,6 @@
 package solutions.cloudstark.quarkus.zalando.problem.runtime;
 
+import static io.restassured.RestAssured.given;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.FORBIDDEN;
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
@@ -13,8 +14,6 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.startsWith;
 
 import io.quarkus.test.junit.QuarkusTest;
-import io.restassured.RestAssured;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 @QuarkusTest
@@ -23,7 +22,7 @@ public class TestResourceIT {
   @Test
   public void noPath() {
     final String path = "/some/thing/not/present/2094u294uasdf9824";
-    RestAssured.given()
+    given()
         .when()
         .get(path)
         .then()
@@ -36,18 +35,13 @@ public class TestResourceIT {
 
   @Test
   public void divideOk() {
-    RestAssured.given()
-        .when()
-        .get("/test/divide/4/2")
-        .then()
-        .statusCode(OK.getStatusCode())
-        .body(is("2"));
+    given().when().get("/test/divide/4/2").then().statusCode(OK.getStatusCode()).body(is("2"));
   }
 
   @Test
   public void divideError() {
     final String path = "/test/divide/4/0";
-    RestAssured.given()
+    given()
         .when()
         .get(path)
         .then()
@@ -61,7 +55,7 @@ public class TestResourceIT {
   @Test
   public void divideConstraintViolation() {
     final String path = "/test/divide/" + (TestResource.DIVIDEND_MAX_VALUE + 1) + "/0";
-    RestAssured.given()
+    given()
         .when()
         .get(path)
         .then()
@@ -78,12 +72,12 @@ public class TestResourceIT {
   @Test
   public void exception() {
     final String path = "/test/exception";
-    RestAssured.given()
+    given()
         .when()
         .get(path)
         .then()
         .statusCode(INTERNAL_SERVER_ERROR.getStatusCode())
-        .body("title", Matchers.is(TestResource.RUNTIME_EXCEPTION_MESSAGE))
+        .body("title", is(TestResource.RUNTIME_EXCEPTION_MESSAGE))
         .body("status", is(INTERNAL_SERVER_ERROR.getStatusCode()))
         .body("instance", is(path))
         .body("detail", endsWith(TestResource.RUNTIME_EXCEPTION_MESSAGE));
@@ -91,12 +85,12 @@ public class TestResourceIT {
 
   @Test
   void problem() {
-    RestAssured.given()
+    given()
         .when()
         .get("/test/problem")
         .then()
         .statusCode(BAD_REQUEST.getStatusCode())
-        .body("title", Matchers.is(TestResource.STRANGE_PROBLEM_TITLE))
+        .body("title", is(TestResource.STRANGE_PROBLEM_TITLE))
         .body("status", is(BAD_REQUEST.getStatusCode()))
         .body("instance", is(nullValue()))
         .body("detail", is(nullValue()));
@@ -105,7 +99,7 @@ public class TestResourceIT {
   @Test
   void restrictedUnauthorized() {
     final String path = "/test/restricted";
-    RestAssured.given()
+    given()
         .when()
         .get(path)
         .then()
@@ -119,7 +113,7 @@ public class TestResourceIT {
   @Test
   void restrictedForbidden() {
     final String path = "/test/restricted";
-    RestAssured.given()
+    given()
         .auth()
         .preemptive()
         .basic("jdoe", "p4ssw0rd")
@@ -135,7 +129,7 @@ public class TestResourceIT {
 
   @Test
   void restrictedOk() {
-    RestAssured.given()
+    given()
         .auth()
         .preemptive()
         .basic("scott", "jb0ss")
