@@ -28,15 +28,15 @@ import javax.ws.rs.ext.ExceptionMapper;
 import org.zalando.problem.DefaultProblem;
 import org.zalando.problem.violations.ConstraintViolationProblem;
 import org.zalando.problem.violations.Violation;
-import solutions.cloudstark.quarkus.problem.runtime.ConstraintViolationExceptionMapper;
-import solutions.cloudstark.quarkus.problem.runtime.ForbiddenExceptionMapper;
-import solutions.cloudstark.quarkus.problem.runtime.NotFoundExceptionMapper;
-import solutions.cloudstark.quarkus.problem.runtime.RestExceptionMapper;
-import solutions.cloudstark.quarkus.problem.runtime.ThrowableProblemMapper;
-import solutions.cloudstark.quarkus.problem.runtime.UnauthorizedExceptionMapper;
-import solutions.cloudstark.quarkus.problem.runtime.jsonb.ConstraintViolationProblemSerializer;
-import solutions.cloudstark.quarkus.problem.runtime.jsonb.DefaultProblemSerializer;
-import solutions.cloudstark.quarkus.problem.runtime.jsonb.ViolationSerializer;
+import solutions.cloudstark.quarkus.zalando.problem.runtime.ConstraintViolationExceptionMapper;
+import solutions.cloudstark.quarkus.zalando.problem.runtime.ForbiddenExceptionMapper;
+import solutions.cloudstark.quarkus.zalando.problem.runtime.NotFoundExceptionMapper;
+import solutions.cloudstark.quarkus.zalando.problem.runtime.RestExceptionMapper;
+import solutions.cloudstark.quarkus.zalando.problem.runtime.ThrowableProblemMapper;
+import solutions.cloudstark.quarkus.zalando.problem.runtime.UnauthorizedExceptionMapper;
+import solutions.cloudstark.quarkus.zalando.problem.runtime.jsonb.ConstraintViolationProblemSerializer;
+import solutions.cloudstark.quarkus.zalando.problem.runtime.jsonb.DefaultProblemSerializer;
+import solutions.cloudstark.quarkus.zalando.problem.runtime.jsonb.ViolationSerializer;
 
 public class ProblemProcessor {
 

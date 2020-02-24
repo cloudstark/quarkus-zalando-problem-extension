@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package solutions.cloudstark.quarkus.problem.runtime.jsonb;
+package solutions.cloudstark.quarkus.zalando.problem.runtime.jsonb;
 
 import java.net.URI;
 import javax.json.bind.serializer.JsonbSerializer;

@@ -1,4 +1,4 @@
-package solutions.cloudstark.quarkus.problem.runtime;
+package solutions.cloudstark.quarkus.zalando.problem.runtime;
 
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.FORBIDDEN;
@@ -14,6 +14,7 @@ import static org.hamcrest.Matchers.startsWith;
 
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 @QuarkusTest
@@ -82,7 +83,7 @@ public class TestResourceIT {
         .get(path)
         .then()
         .statusCode(INTERNAL_SERVER_ERROR.getStatusCode())
-        .body("title", is(TestResource.RUNTIME_EXCEPTION_MESSAGE))
+        .body("title", Matchers.is(TestResource.RUNTIME_EXCEPTION_MESSAGE))
         .body("status", is(INTERNAL_SERVER_ERROR.getStatusCode()))
         .body("instance", is(path))
         .body("detail", endsWith(TestResource.RUNTIME_EXCEPTION_MESSAGE));
@@ -95,7 +96,7 @@ public class TestResourceIT {
         .get("/test/problem")
         .then()
         .statusCode(BAD_REQUEST.getStatusCode())
-        .body("title", is(TestResource.STRANGE_PROBLEM_TITLE))
+        .body("title", Matchers.is(TestResource.STRANGE_PROBLEM_TITLE))
         .body("status", is(BAD_REQUEST.getStatusCode()))
         .body("instance", is(nullValue()))
         .body("detail", is(nullValue()));

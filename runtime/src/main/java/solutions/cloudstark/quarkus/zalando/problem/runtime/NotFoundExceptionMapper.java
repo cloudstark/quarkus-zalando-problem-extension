@@ -14,34 +14,39 @@
  *    limitations under the License.
  */
 
-package solutions.cloudstark.quarkus.problem.runtime;
+package solutions.cloudstark.quarkus.zalando.problem.runtime;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.net.URI;
 import javax.annotation.Priority;
-import javax.validation.ConstraintViolationException;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Priorities;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
+import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
-import org.zalando.problem.violations.ConstraintViolationProblem;
-import org.zalando.problem.violations.Violation;
+import org.zalando.problem.ThrowableProblem;
 
 @Provider
 @Priority(Priorities.USER)
-public class ConstraintViolationExceptionMapper
-    implements ExceptionMapper<ConstraintViolationException> {
+public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundException> {
+
+  @Context UriInfo uriInfo;
 
   @Override
-  public Response toResponse(final ConstraintViolationException exception) {
-    final List<Violation> violations =
-        exception.getConstraintViolations().stream()
-            .map(c -> new Violation(c.getPropertyPath().toString(), c.getMessage()))
-            .collect(Collectors.toList());
-    return Response.status(400)
+  public Response toResponse(final NotFoundException exception) {
+    final ThrowableProblem throwableProblem =
+        Problem.builder()
+            .withStatus(Status.NOT_FOUND)
+            .withTitle(exception.getMessage())
+            .withDetail(exception.toString())
+            .withInstance(URI.create(uriInfo.getPath()))
+            .build();
+    return Response.status(throwableProblem.getStatus().getStatusCode())
         .type(MediaType.APPLICATION_PROBLEM_JSON)
-        .entity(new ConstraintViolationProblem(Status.BAD_REQUEST, violations))
+        .entity(throwableProblem)
         .build();
   }
 }

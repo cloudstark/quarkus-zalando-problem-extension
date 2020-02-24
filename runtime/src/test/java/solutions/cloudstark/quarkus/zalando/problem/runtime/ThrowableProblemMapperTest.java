@@ -1,4 +1,4 @@
-package solutions.cloudstark.quarkus.problem.runtime;
+package solutions.cloudstark.quarkus.zalando.problem.runtime;
 
 import javax.ws.rs.core.Response;
 import org.junit.jupiter.api.Assertions;

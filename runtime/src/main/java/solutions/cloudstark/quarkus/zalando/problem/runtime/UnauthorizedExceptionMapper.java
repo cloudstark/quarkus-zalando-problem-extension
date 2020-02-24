@@ -14,11 +14,11 @@
  *    limitations under the License.
  */
 
-package solutions.cloudstark.quarkus.problem.runtime;
+package solutions.cloudstark.quarkus.zalando.problem.runtime;
 
+import io.quarkus.security.UnauthorizedException;
 import java.net.URI;
 import javax.annotation.Priority;
-import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -31,15 +31,15 @@ import org.zalando.problem.ThrowableProblem;
 
 @Provider
 @Priority(Priorities.USER)
-public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundException> {
+public class UnauthorizedExceptionMapper implements ExceptionMapper<UnauthorizedException> {
 
   @Context UriInfo uriInfo;
 
   @Override
-  public Response toResponse(final NotFoundException exception) {
+  public Response toResponse(final UnauthorizedException exception) {
     final ThrowableProblem throwableProblem =
         Problem.builder()
-            .withStatus(Status.NOT_FOUND)
+            .withStatus(Status.UNAUTHORIZED)
             .withTitle(exception.getMessage())
             .withDetail(exception.toString())
             .withInstance(URI.create(uriInfo.getPath()))

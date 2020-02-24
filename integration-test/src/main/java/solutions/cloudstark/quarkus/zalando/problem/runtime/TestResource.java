@@ -1,4 +1,4 @@
-package solutions.cloudstark.quarkus.problem.runtime;
+package solutions.cloudstark.quarkus.zalando.problem.runtime;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
