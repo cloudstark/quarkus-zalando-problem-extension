@@ -1,5 +1,6 @@
-package solutions.cloudstark.quarkus.problem.runtime;
+package solutions.cloudstark.quarkus.zalando.problem.runtime;
 
+import static io.restassured.RestAssured.given;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.FORBIDDEN;
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
@@ -13,7 +14,6 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.startsWith;
 
 import io.quarkus.test.junit.QuarkusTest;
-import io.restassured.RestAssured;
 import org.junit.jupiter.api.Test;
 
 @QuarkusTest
@@ -22,7 +22,7 @@ public class TestResourceIT {
   @Test
   public void noPath() {
     final String path = "/some/thing/not/present/2094u294uasdf9824";
-    RestAssured.given()
+    given()
         .when()
         .get(path)
         .then()
@@ -35,18 +35,13 @@ public class TestResourceIT {
 
   @Test
   public void divideOk() {
-    RestAssured.given()
-        .when()
-        .get("/test/divide/4/2")
-        .then()
-        .statusCode(OK.getStatusCode())
-        .body(is("2"));
+    given().when().get("/test/divide/4/2").then().statusCode(OK.getStatusCode()).body(is("2"));
   }
 
   @Test
   public void divideError() {
     final String path = "/test/divide/4/0";
-    RestAssured.given()
+    given()
         .when()
         .get(path)
         .then()
@@ -60,7 +55,7 @@ public class TestResourceIT {
   @Test
   public void divideConstraintViolation() {
     final String path = "/test/divide/" + (TestResource.DIVIDEND_MAX_VALUE + 1) + "/0";
-    RestAssured.given()
+    given()
         .when()
         .get(path)
         .then()
@@ -77,7 +72,7 @@ public class TestResourceIT {
   @Test
   public void exception() {
     final String path = "/test/exception";
-    RestAssured.given()
+    given()
         .when()
         .get(path)
         .then()
@@ -90,7 +85,7 @@ public class TestResourceIT {
 
   @Test
   void problem() {
-    RestAssured.given()
+    given()
         .when()
         .get("/test/problem")
         .then()
@@ -104,7 +99,7 @@ public class TestResourceIT {
   @Test
   void restrictedUnauthorized() {
     final String path = "/test/restricted";
-    RestAssured.given()
+    given()
         .when()
         .get(path)
         .then()
@@ -118,7 +113,7 @@ public class TestResourceIT {
   @Test
   void restrictedForbidden() {
     final String path = "/test/restricted";
-    RestAssured.given()
+    given()
         .auth()
         .preemptive()
         .basic("jdoe", "p4ssw0rd")
@@ -134,7 +129,7 @@ public class TestResourceIT {
 
   @Test
   void restrictedOk() {
-    RestAssured.given()
+    given()
         .auth()
         .preemptive()
         .basic("scott", "jb0ss")

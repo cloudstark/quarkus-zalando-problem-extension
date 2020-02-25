@@ -14,39 +14,34 @@
  *    limitations under the License.
  */
 
-package solutions.cloudstark.quarkus.problem.runtime;
+package solutions.cloudstark.quarkus.zalando.problem.runtime;
 
-import io.quarkus.security.ForbiddenException;
-import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.annotation.Priority;
+import javax.validation.ConstraintViolationException;
 import javax.ws.rs.Priorities;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
-import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
-import org.zalando.problem.ThrowableProblem;
+import org.zalando.problem.violations.ConstraintViolationProblem;
+import org.zalando.problem.violations.Violation;
 
 @Provider
 @Priority(Priorities.USER)
-public class ForbiddenExceptionMapper implements ExceptionMapper<ForbiddenException> {
-
-  @Context UriInfo uriInfo;
+public class ConstraintViolationExceptionMapper
+    implements ExceptionMapper<ConstraintViolationException> {
 
   @Override
-  public Response toResponse(final ForbiddenException exception) {
-    final ThrowableProblem throwableProblem =
-        Problem.builder()
-            .withStatus(Status.FORBIDDEN)
-            .withTitle(exception.getMessage())
-            .withDetail(exception.toString())
-            .withInstance(URI.create(uriInfo.getPath()))
-            .build();
-    return Response.status(throwableProblem.getStatus().getStatusCode())
+  public Response toResponse(final ConstraintViolationException exception) {
+    final List<Violation> violations =
+        exception.getConstraintViolations().stream()
+            .map(c -> new Violation(c.getPropertyPath().toString(), c.getMessage()))
+            .collect(Collectors.toList());
+    return Response.status(400)
         .type(MediaType.APPLICATION_PROBLEM_JSON)
-        .entity(throwableProblem)
+        .entity(new ConstraintViolationProblem(Status.BAD_REQUEST, violations))
         .build();
   }
 }

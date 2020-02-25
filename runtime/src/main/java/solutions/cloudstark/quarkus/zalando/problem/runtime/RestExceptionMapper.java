@@ -14,12 +14,9 @@
  *    limitations under the License.
  */
 
-package solutions.cloudstark.quarkus.problem.runtime;
+package solutions.cloudstark.quarkus.zalando.problem.runtime;
 
-import io.quarkus.security.UnauthorizedException;
 import java.net.URI;
-import javax.annotation.Priority;
-import javax.ws.rs.Priorities;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
@@ -30,20 +27,20 @@ import org.zalando.problem.Status;
 import org.zalando.problem.ThrowableProblem;
 
 @Provider
-@Priority(Priorities.USER)
-public class UnauthorizedExceptionMapper implements ExceptionMapper<UnauthorizedException> {
+public class RestExceptionMapper implements ExceptionMapper<Throwable> {
 
   @Context UriInfo uriInfo;
 
   @Override
-  public Response toResponse(final UnauthorizedException exception) {
+  public Response toResponse(final Throwable throwable) {
     final ThrowableProblem throwableProblem =
         Problem.builder()
-            .withStatus(Status.UNAUTHORIZED)
-            .withTitle(exception.getMessage())
-            .withDetail(exception.toString())
+            .withStatus(Status.INTERNAL_SERVER_ERROR)
+            .withTitle(throwable.getMessage())
+            .withDetail(throwable.toString())
             .withInstance(URI.create(uriInfo.getPath()))
             .build();
+
     return Response.status(throwableProblem.getStatus().getStatusCode())
         .type(MediaType.APPLICATION_PROBLEM_JSON)
         .entity(throwableProblem)

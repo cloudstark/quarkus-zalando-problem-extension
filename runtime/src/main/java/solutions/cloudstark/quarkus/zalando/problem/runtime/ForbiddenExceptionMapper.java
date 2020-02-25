@@ -14,9 +14,12 @@
  *    limitations under the License.
  */
 
-package solutions.cloudstark.quarkus.problem.runtime;
+package solutions.cloudstark.quarkus.zalando.problem.runtime;
 
+import io.quarkus.security.ForbiddenException;
 import java.net.URI;
+import javax.annotation.Priority;
+import javax.ws.rs.Priorities;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
@@ -27,20 +30,20 @@ import org.zalando.problem.Status;
 import org.zalando.problem.ThrowableProblem;
 
 @Provider
-public class RestExceptionMapper implements ExceptionMapper<Throwable> {
+@Priority(Priorities.USER)
+public class ForbiddenExceptionMapper implements ExceptionMapper<ForbiddenException> {
 
   @Context UriInfo uriInfo;
 
   @Override
-  public Response toResponse(final Throwable throwable) {
+  public Response toResponse(final ForbiddenException exception) {
     final ThrowableProblem throwableProblem =
         Problem.builder()
-            .withStatus(Status.INTERNAL_SERVER_ERROR)
-            .withTitle(throwable.getMessage())
-            .withDetail(throwable.toString())
+            .withStatus(Status.FORBIDDEN)
+            .withTitle(exception.getMessage())
+            .withDetail(exception.toString())
             .withInstance(URI.create(uriInfo.getPath()))
             .build();
-
     return Response.status(throwableProblem.getStatus().getStatusCode())
         .type(MediaType.APPLICATION_PROBLEM_JSON)
         .entity(throwableProblem)
