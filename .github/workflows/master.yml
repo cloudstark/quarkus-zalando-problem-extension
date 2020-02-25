@@ -44,6 +44,15 @@ jobs:
       - name: Install dependencies
         id: install
         run: mvn $MVN_CLI_OPTS clean install
+      - name: Rocket.Chat Notification
+        uses: RocketChat/Rocket.Chat.GitHub.Action.Notification@master
+        if: failure()
+        with:
+          type: ${{ job.status }}
+          job_name: '*Install dependencies*'
+          mention: 'here'
+          mention_if: 'failure'
+          url: ${{ secrets.ROCKETCHAT_WEBHOOK }}
 
   test:
     name: test
@@ -63,6 +72,15 @@ jobs:
           key: ${{ github.ref }}
       - name: Run tests
         run: mvn $MVN_CLI_OPTS test
+      - name: Rocket.Chat Notification
+        uses: RocketChat/Rocket.Chat.GitHub.Action.Notification@master
+        if: failure()
+        with:
+          type: ${{ job.status }}
+          job_name: '*Run tests*'
+          mention: 'here'
+          mention_if: 'failure'
+          url: ${{ secrets.ROCKETCHAT_WEBHOOK }}
 
 #  quality:
 #    name: SonarCloud Trigger
@@ -108,6 +126,15 @@ jobs:
           key: ${{ github.ref }}
       - name: Build the project
         run: mvn $MAVEN_CLI_OPTS package -DskipTests
+      - name: Rocket.Chat Notification
+        uses: RocketChat/Rocket.Chat.GitHub.Action.Notification@master
+        if: failure()
+        with:
+          type: ${{ job.status }}
+          job_name: '*Build the project*'
+          mention: 'here'
+          mention_if: 'failure'
+          url: ${{ secrets.ROCKETCHAT_WEBHOOK }}
 
   publish:
     name: publish
@@ -130,3 +157,21 @@ jobs:
           key: ${{ github.ref }}
       - name: Publish on Bintray/JCenter
         run: mvn $MAVEN_CLI_OPTS deploy -DskipTests -Ddependency-check.skip=true
+      - name: Rocket.Chat Notification
+        uses: RocketChat/Rocket.Chat.GitHub.Action.Notification@master
+        if: failure()
+        with:
+          type: ${{ job.status }}
+          job_name: '*Publish on Bintray/JCenter*'
+          //mention: 'here'
+          mention_if: 'failure'
+          url: ${{ secrets.ROCKETCHAT_WEBHOOK }}
+      - name: Rocket.Chat Notification
+        uses: RocketChat/Rocket.Chat.GitHub.Action.Notification@master
+        if: success()
+        with:
+          type: ${{ job.status }}
+          job_name: '*Publish on Bintray/JCenter*'
+          mention: 'Version ${{ env.PROJECT_VERSION }} released on JCenter'
+          mention_if: 'success'
+          url: ${{ secrets.ROCKETCHAT_WEBHOOK }}
