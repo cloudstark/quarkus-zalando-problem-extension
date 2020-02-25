@@ -146,6 +146,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+      - name: Export project version
+        uses: ./.github/actions/export-project-version
       - name: Setup Java 1.8
         uses: joschi/setup-jdk@v1.0.0
         with:
@@ -159,19 +161,9 @@ jobs:
         run: mvn $MAVEN_CLI_OPTS deploy -DskipTests -Ddependency-check.skip=true
       - name: Rocket.Chat Notification
         uses: RocketChat/Rocket.Chat.GitHub.Action.Notification@master
-        if: failure()
+        if: always()
         with:
           type: ${{ job.status }}
-          job_name: '*Publish on Bintray/JCenter*'
-          //mention: 'here'
-          mention_if: 'failure'
-          url: ${{ secrets.ROCKETCHAT_WEBHOOK }}
-      - name: Rocket.Chat Notification
-        uses: RocketChat/Rocket.Chat.GitHub.Action.Notification@master
-        if: success()
-        with:
-          type: ${{ job.status }}
-          job_name: '*Publish on Bintray/JCenter*'
-          mention: 'Version ${{ env.PROJECT_VERSION }} released on JCenter'
-          mention_if: 'success'
+          job_name: '*Publish ${{ env.PROJECT_VERSION }} on Bintray/JCenter*'
+          mention: 'here'
           url: ${{ secrets.ROCKETCHAT_WEBHOOK }}
