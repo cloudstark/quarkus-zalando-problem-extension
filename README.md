@@ -1,4 +1,4 @@
-# Quarkus Problem (RFC7807) Extension
+# Quarkus Problem (RFC7807) Extension ![master](https://github.com/cloudstark/quarkus-zalando-problem-extension/workflows/master/badge.svg)
 
 Extension to use [Zalando Problem](https://github.com/zalando/problem) in your [Quarkus](https://quarkus.io) JAX-RS
 application. The extension will register an `ExceptionMapper` that is responsible to map catched Exceptions into
