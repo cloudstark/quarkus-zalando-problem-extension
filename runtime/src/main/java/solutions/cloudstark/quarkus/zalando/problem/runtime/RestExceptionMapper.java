@@ -16,6 +16,7 @@
 
 package solutions.cloudstark.quarkus.zalando.problem.runtime;
 
+import io.quarkus.runtime.LaunchMode;
 import io.vertx.core.http.HttpServerRequest;
 import java.net.URI;
 import javax.ws.rs.core.Context;
@@ -24,11 +25,14 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 import org.zalando.problem.Problem;
+import org.zalando.problem.ProblemBuilder;
 import org.zalando.problem.Status;
 import org.zalando.problem.ThrowableProblem;
 
 @Provider
 public class RestExceptionMapper implements ExceptionMapper<Throwable> {
+
+  public static final String STACKTRACE_KEY = "stacktrace";
 
   static final String HTTP_METHOD_KEY = "http_method";
 
@@ -38,14 +42,18 @@ public class RestExceptionMapper implements ExceptionMapper<Throwable> {
 
   @Override
   public Response toResponse(final Throwable throwable) {
-    final ThrowableProblem throwableProblem =
+    final ProblemBuilder problemBuilder =
         Problem.builder()
             .withStatus(Status.INTERNAL_SERVER_ERROR)
             .withTitle(throwable.getMessage())
             .withDetail(throwable.toString())
             .with(HTTP_METHOD_KEY, request.rawMethod())
-            .withInstance(URI.create(uriInfo.getPath()))
-            .build();
+            .withInstance(URI.create(uriInfo.getPath()));
+    if (LaunchMode.current().isDevOrTest()) {
+      problemBuilder.with(STACKTRACE_KEY, throwable.getStackTrace());
+    }
+
+    final ThrowableProblem throwableProblem = problemBuilder.build();
 
     return Response.status(throwableProblem.getStatus().getStatusCode())
         .type(MediaType.APPLICATION_PROBLEM_JSON)

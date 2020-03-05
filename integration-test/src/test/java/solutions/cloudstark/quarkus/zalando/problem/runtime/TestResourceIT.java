@@ -51,7 +51,8 @@ public class TestResourceIT {
         .body("status", is(INTERNAL_SERVER_ERROR.getStatusCode()))
         .body("http_method", is("GET"))
         .body("instance", is(path))
-        .body("detail", is("java.lang.ArithmeticException: / by zero"));
+        .body("detail", is("java.lang.ArithmeticException: / by zero"))
+        .body("stacktrace.size()", is(51));
   }
 
   @Test
@@ -84,7 +85,8 @@ public class TestResourceIT {
         .body("status", is(INTERNAL_SERVER_ERROR.getStatusCode()))
         .body("http_method", is("GET"))
         .body("instance", is(path))
-        .body("detail", endsWith(TestResource.RUNTIME_EXCEPTION_MESSAGE));
+        .body("detail", endsWith(TestResource.RUNTIME_EXCEPTION_MESSAGE))
+        .body("stacktrace.size()", is(41));
   }
 
   @Test
