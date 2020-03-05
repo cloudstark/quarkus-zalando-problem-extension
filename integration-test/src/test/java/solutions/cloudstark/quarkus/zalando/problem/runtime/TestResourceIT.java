@@ -29,6 +29,7 @@ public class TestResourceIT {
         .statusCode(NOT_FOUND.getStatusCode())
         .body("title", startsWith("RESTEASY003210"))
         .body("status", is(NOT_FOUND.getStatusCode()))
+        .body("http_method", is("GET"))
         .body("instance", is(path))
         .body("detail", startsWith("javax.ws.rs.NotFoundException"));
   }
@@ -48,6 +49,7 @@ public class TestResourceIT {
         .statusCode(INTERNAL_SERVER_ERROR.getStatusCode())
         .body("title", is("/ by zero"))
         .body("status", is(INTERNAL_SERVER_ERROR.getStatusCode()))
+        .body("http_method", is("GET"))
         .body("instance", is(path))
         .body("detail", is("java.lang.ArithmeticException: / by zero"));
   }
@@ -62,6 +64,7 @@ public class TestResourceIT {
         .statusCode(BAD_REQUEST.getStatusCode())
         .body("title", is("Constraint Violation"))
         .body("status", is(BAD_REQUEST.getStatusCode()))
+        .body("http_method", is(nullValue()))
         .body("instance", is(nullValue()))
         .body("detail", is(nullValue()))
         .body("violations[0].size()", is(2))
@@ -79,6 +82,7 @@ public class TestResourceIT {
         .statusCode(INTERNAL_SERVER_ERROR.getStatusCode())
         .body("title", is(TestResource.RUNTIME_EXCEPTION_MESSAGE))
         .body("status", is(INTERNAL_SERVER_ERROR.getStatusCode()))
+        .body("http_method", is("GET"))
         .body("instance", is(path))
         .body("detail", endsWith(TestResource.RUNTIME_EXCEPTION_MESSAGE));
   }
@@ -92,6 +96,7 @@ public class TestResourceIT {
         .statusCode(BAD_REQUEST.getStatusCode())
         .body("title", is(TestResource.STRANGE_PROBLEM_TITLE))
         .body("status", is(BAD_REQUEST.getStatusCode()))
+        .body("http_method", is(nullValue()))
         .body("instance", is(nullValue()))
         .body("detail", is(nullValue()));
   }
@@ -106,6 +111,7 @@ public class TestResourceIT {
         .statusCode(UNAUTHORIZED.getStatusCode())
         .body("title", is(nullValue()))
         .body("status", is(UNAUTHORIZED.getStatusCode()))
+        .body("http_method", is("GET"))
         .body("instance", is(path))
         .body("detail", is("io.quarkus.security.UnauthorizedException"));
   }
@@ -123,6 +129,7 @@ public class TestResourceIT {
         .statusCode(FORBIDDEN.getStatusCode())
         .body("title", is(nullValue()))
         .body("status", is(FORBIDDEN.getStatusCode()))
+        .body("http_method", is("GET"))
         .body("instance", is(path))
         .body("detail", is("io.quarkus.security.ForbiddenException"));
   }
