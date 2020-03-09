@@ -4,11 +4,13 @@ import static io.restassured.RestAssured.given;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.FORBIDDEN;
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
+import static javax.ws.rs.core.Response.Status.METHOD_NOT_ALLOWED;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import static javax.ws.rs.core.Response.Status.OK;
 import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.endsWith;
+import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.startsWith;
@@ -93,7 +95,9 @@ public class TestResourceIT {
         .body("title", is(TestResource.STRANGE_PROBLEM_TITLE))
         .body("status", is(BAD_REQUEST.getStatusCode()))
         .body("instance", is(nullValue()))
-        .body("detail", is(nullValue()));
+        .body("detail", is(nullValue()))
+        .body("foo", is("bar"))
+    ;
   }
 
   @Test
@@ -138,5 +142,15 @@ public class TestResourceIT {
         .then()
         .statusCode(OK.getStatusCode())
         .body(is("true"));
+  }
+
+  @Test
+  void methodNotAllowed() {
+    given()
+      .when()
+      .post("/test/divide/4/2")
+      .then()
+      .statusCode(METHOD_NOT_ALLOWED.getStatusCode())
+      .body("http_allowed_methods", hasItems("HEAD","GET","OPTIONS"));
   }
 }

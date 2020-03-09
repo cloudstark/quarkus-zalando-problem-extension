@@ -30,6 +30,7 @@ import org.zalando.problem.violations.ConstraintViolationProblem;
 import org.zalando.problem.violations.Violation;
 import solutions.cloudstark.quarkus.zalando.problem.runtime.ConstraintViolationExceptionMapper;
 import solutions.cloudstark.quarkus.zalando.problem.runtime.ForbiddenExceptionMapper;
+import solutions.cloudstark.quarkus.zalando.problem.runtime.NotAllowedExceptionMapper;
 import solutions.cloudstark.quarkus.zalando.problem.runtime.NotFoundExceptionMapper;
 import solutions.cloudstark.quarkus.zalando.problem.runtime.RestExceptionMapper;
 import solutions.cloudstark.quarkus.zalando.problem.runtime.ThrowableProblemMapper;
@@ -46,6 +47,7 @@ public class ProblemProcessor {
       Arrays.asList(
           ConstraintViolationExceptionMapper.class,
           ForbiddenExceptionMapper.class,
+          NotAllowedExceptionMapper.class,
           NotFoundExceptionMapper.class,
           UnauthorizedExceptionMapper.class,
           ThrowableProblemMapper.class,
