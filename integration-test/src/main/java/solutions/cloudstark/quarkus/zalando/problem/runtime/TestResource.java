@@ -37,7 +37,11 @@ public class TestResource {
   @GET
   @Path("/problem")
   public void problem() {
-    throw Problem.builder().withStatus(Status.BAD_REQUEST).withTitle(STRANGE_PROBLEM_TITLE).build();
+    throw Problem.builder()
+        .withStatus(Status.BAD_REQUEST)
+        .withTitle(STRANGE_PROBLEM_TITLE)
+        .with("foo", "bar")
+        .build();
   }
 
   @GET
