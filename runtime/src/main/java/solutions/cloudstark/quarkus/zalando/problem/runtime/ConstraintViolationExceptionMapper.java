@@ -39,9 +39,11 @@ public class ConstraintViolationExceptionMapper
         exception.getConstraintViolations().stream()
             .map(c -> new Violation(c.getPropertyPath().toString(), c.getMessage()))
             .collect(Collectors.toList());
-    return Response.status(400)
+
+    final Status httpStatus = Status.BAD_REQUEST;
+    return Response.status(httpStatus.getStatusCode())
         .type(MediaType.APPLICATION_PROBLEM_JSON)
-        .entity(new ConstraintViolationProblem(Status.BAD_REQUEST, violations))
+        .entity(new ConstraintViolationProblem(httpStatus, violations))
         .build();
   }
 }

@@ -30,7 +30,6 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
-import org.zalando.problem.ThrowableProblem;
 
 @Provider
 @Priority(Priorities.USER)
@@ -42,7 +41,7 @@ public class ForbiddenExceptionMapper implements ExceptionMapper<ForbiddenExcept
 
   @Override
   public Response toResponse(final ForbiddenException exception) {
-    final ThrowableProblem throwableProblem =
+    final Problem throwableProblem =
         Problem.builder()
             .withStatus(Status.FORBIDDEN)
             .withTitle(exception.getMessage())
@@ -50,6 +49,7 @@ public class ForbiddenExceptionMapper implements ExceptionMapper<ForbiddenExcept
             .with(HTTP_METHOD_KEY, request.rawMethod())
             .withInstance(URI.create(uriInfo.getPath()))
             .build();
+
     return Response.status(throwableProblem.getStatus().getStatusCode())
         .type(MediaType.APPLICATION_PROBLEM_JSON)
         .entity(throwableProblem)

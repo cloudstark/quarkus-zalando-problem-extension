@@ -12,7 +12,6 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.startsWith;
 
@@ -87,7 +86,11 @@ public class TestResourceIT {
         .body("status", is(INTERNAL_SERVER_ERROR.getStatusCode()))
         .body("http_method", is("GET"))
         .body("instance", is(path))
-        .body("detail", endsWith(TestResource.RUNTIME_EXCEPTION_MESSAGE));
+        .body("detail", endsWith(TestResource.RUNTIME_EXCEPTION_MESSAGE))
+        .body("cause.title", is(TestResource.IO_EXCEPTION1_MESSAGE))
+        .body("cause.detail", endsWith(TestResource.IO_EXCEPTION1_MESSAGE))
+        .body("cause.cause.title", is(TestResource.IO_EXCEPTION2_MESSAGE))
+        .body("cause.cause.detail", endsWith(TestResource.IO_EXCEPTION2_MESSAGE));
   }
 
   @Test
@@ -102,8 +105,7 @@ public class TestResourceIT {
         .body("http_method", is(nullValue()))
         .body("instance", is(nullValue()))
         .body("detail", is(nullValue()))
-        .body("foo", is("bar"))
-    ;
+        .body("foo", is("bar"));
   }
 
   @Test
@@ -169,6 +171,7 @@ public class TestResourceIT {
         .get("/test/chain")
         .then()
         .statusCode(BAD_REQUEST.getStatusCode())
-        .body("cause.title", is("Out of Stock"));
+        .body("cause.title", is("Out of Stock"))
+        .body("cause.cause.title", is("Extreme out of Stock"));
   }
 }

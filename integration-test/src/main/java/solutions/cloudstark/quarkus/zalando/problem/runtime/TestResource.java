@@ -2,6 +2,7 @@ package solutions.cloudstark.quarkus.zalando.problem.runtime;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
+import java.io.IOException;
 import java.net.URI;
 import javax.annotation.security.RolesAllowed;
 import javax.validation.constraints.Max;
@@ -22,6 +23,10 @@ public class TestResource {
 
   static final String RUNTIME_EXCEPTION_MESSAGE = "This is a runtime exception!";
 
+  static final String IO_EXCEPTION1_MESSAGE = "This is the first io exception!";
+
+  static final String IO_EXCEPTION2_MESSAGE = "This is the second io exception!";
+
   @GET
   @Path("/divide/{a}/{b}")
   public int divide(
@@ -32,7 +37,9 @@ public class TestResource {
   @GET
   @Path("/exception")
   public void exception() {
-    throw new RuntimeException(RUNTIME_EXCEPTION_MESSAGE);
+    final IOException causeOfCause = new IOException(IO_EXCEPTION2_MESSAGE);
+    final IOException cause = new IOException(IO_EXCEPTION1_MESSAGE, causeOfCause);
+    throw new RuntimeException(RUNTIME_EXCEPTION_MESSAGE, cause);
   }
 
   @GET
@@ -65,6 +72,13 @@ public class TestResource {
                 .withTitle("Out of Stock")
                 .withStatus(Status.BAD_REQUEST)
                 .withDetail("Item B00027Y5QG is no longer available")
+                .withCause(
+                    Problem.builder()
+                        .withType(URI.create("https://example.org/more-out-of-stock"))
+                        .withTitle("Extreme out of Stock")
+                        .withStatus(Status.BAD_REQUEST)
+                        .withDetail("Item ABC0123456 is no longer available")
+                        .build())
                 .build())
         .build();
   }
