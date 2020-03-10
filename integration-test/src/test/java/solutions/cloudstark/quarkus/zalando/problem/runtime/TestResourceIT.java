@@ -12,6 +12,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.startsWith;
 
@@ -154,10 +155,20 @@ public class TestResourceIT {
   @Test
   void methodNotAllowed() {
     given()
-      .when()
-      .post("/test/divide/4/2")
-      .then()
-      .statusCode(METHOD_NOT_ALLOWED.getStatusCode())
-      .body("http_allowed_methods", hasItems("HEAD","GET","OPTIONS"));
+        .when()
+        .post("/test/divide/4/2")
+        .then()
+        .statusCode(METHOD_NOT_ALLOWED.getStatusCode())
+        .body("http_allowed_methods", hasItems("HEAD", "GET", "OPTIONS"));
+  }
+
+  @Test
+  void causalChain() {
+    given()
+        .when()
+        .get("/test/chain")
+        .then()
+        .statusCode(BAD_REQUEST.getStatusCode())
+        .body("cause.title", is("Out of Stock"));
   }
 }
