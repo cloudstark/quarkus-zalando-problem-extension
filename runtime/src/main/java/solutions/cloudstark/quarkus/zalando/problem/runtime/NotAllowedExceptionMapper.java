@@ -16,6 +16,8 @@
 
 package solutions.cloudstark.quarkus.zalando.problem.runtime;
 
+import static solutions.cloudstark.quarkus.zalando.problem.runtime.RestExceptionMapper.HTTP_METHOD_KEY;
+
 import java.net.URI;
 import javax.annotation.Priority;
 import javax.ws.rs.NotAllowedException;
@@ -28,10 +30,17 @@ import javax.ws.rs.ext.Provider;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
 import org.zalando.problem.ThrowableProblem;
+import io.vertx.core.http.HttpServerRequest;
 
 @Provider
 @Priority(Priorities.USER)
 public class NotAllowedExceptionMapper implements ExceptionMapper<NotAllowedException> {
+
+  static final String HTTP_ALLOWED_METHODS_KEY = "http_allowed_methods";
+
+  static final String HTTP_HEADER_ALLOW = "Allow";
+
+  @Context HttpServerRequest request;
 
   @Context UriInfo uriInfo;
 
@@ -43,11 +52,12 @@ public class NotAllowedExceptionMapper implements ExceptionMapper<NotAllowedExce
             .withTitle(exception.getMessage())
             .withDetail(exception.toString())
             .withInstance(URI.create(uriInfo.getPath()))
-            .with("http_allowed_methods", exception.getResponse().getAllowedMethods())
+            .with(HTTP_METHOD_KEY, request.rawMethod())
+            .with(HTTP_ALLOWED_METHODS_KEY, exception.getResponse().getAllowedMethods())
             .build();
     return Response.status(throwableProblem.getStatus().getStatusCode())
         .type(MediaType.APPLICATION_PROBLEM_JSON)
-        .header("Allow", String.join(", ", exception.getResponse().getAllowedMethods()))
+        .header(HTTP_HEADER_ALLOW, String.join(", ", exception.getResponse().getAllowedMethods()))
         .entity(throwableProblem)
         .build();
   }
