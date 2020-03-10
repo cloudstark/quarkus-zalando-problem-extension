@@ -2,6 +2,7 @@ package solutions.cloudstark.quarkus.zalando.problem.runtime;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
+import java.net.URI;
 import javax.annotation.security.RolesAllowed;
 import javax.validation.constraints.Max;
 import javax.ws.rs.GET;
@@ -49,5 +50,22 @@ public class TestResource {
   @RolesAllowed("Tester")
   public boolean restricted() {
     return true;
+  }
+
+  @GET
+  @Path("/chain")
+  public void causalChain() {
+    throw Problem.builder()
+        .withStatus(Status.BAD_REQUEST)
+        .withTitle("Order failed")
+        .withType(URI.create("https://example.org/order-failed"))
+        .withCause(
+            Problem.builder()
+                .withType(URI.create("https://example.org/out-of-stock"))
+                .withTitle("Out of Stock")
+                .withStatus(Status.BAD_REQUEST)
+                .withDetail("Item B00027Y5QG is no longer available")
+                .build())
+        .build();
   }
 }
