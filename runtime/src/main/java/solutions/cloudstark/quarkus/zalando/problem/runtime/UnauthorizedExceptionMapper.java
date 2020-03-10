@@ -16,7 +16,10 @@
 
 package solutions.cloudstark.quarkus.zalando.problem.runtime;
 
+import static solutions.cloudstark.quarkus.zalando.problem.runtime.RestExceptionMapper.HTTP_METHOD_KEY;
+
 import io.quarkus.security.UnauthorizedException;
+import io.vertx.core.http.HttpServerRequest;
 import java.net.URI;
 import javax.annotation.Priority;
 import javax.ws.rs.Priorities;
@@ -33,6 +36,8 @@ import org.zalando.problem.ThrowableProblem;
 @Priority(Priorities.USER)
 public class UnauthorizedExceptionMapper implements ExceptionMapper<UnauthorizedException> {
 
+  @Context HttpServerRequest request;
+
   @Context UriInfo uriInfo;
 
   @Override
@@ -42,6 +47,7 @@ public class UnauthorizedExceptionMapper implements ExceptionMapper<Unauthorized
             .withStatus(Status.UNAUTHORIZED)
             .withTitle(exception.getMessage())
             .withDetail(exception.toString())
+            .with(HTTP_METHOD_KEY, request.rawMethod())
             .withInstance(URI.create(uriInfo.getPath()))
             .build();
     return Response.status(throwableProblem.getStatus().getStatusCode())

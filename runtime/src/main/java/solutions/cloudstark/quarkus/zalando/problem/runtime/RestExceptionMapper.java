@@ -16,6 +16,7 @@
 
 package solutions.cloudstark.quarkus.zalando.problem.runtime;
 
+import io.vertx.core.http.HttpServerRequest;
 import java.net.URI;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -29,6 +30,10 @@ import org.zalando.problem.ThrowableProblem;
 @Provider
 public class RestExceptionMapper implements ExceptionMapper<Throwable> {
 
+  static final String HTTP_METHOD_KEY = "http_method";
+
+  @Context HttpServerRequest request;
+
   @Context UriInfo uriInfo;
 
   @Override
@@ -38,6 +43,7 @@ public class RestExceptionMapper implements ExceptionMapper<Throwable> {
             .withStatus(Status.INTERNAL_SERVER_ERROR)
             .withTitle(throwable.getMessage())
             .withDetail(throwable.toString())
+            .with(HTTP_METHOD_KEY, request.rawMethod())
             .withInstance(URI.create(uriInfo.getPath()))
             .build();
 
