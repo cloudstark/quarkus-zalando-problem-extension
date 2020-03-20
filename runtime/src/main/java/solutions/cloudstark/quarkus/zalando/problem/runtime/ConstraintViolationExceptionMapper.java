@@ -24,6 +24,7 @@ import javax.ws.rs.Priorities;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
+import org.jboss.logging.Logger;
 import org.zalando.problem.Status;
 import org.zalando.problem.violations.ConstraintViolationProblem;
 import org.zalando.problem.violations.Violation;
@@ -33,8 +34,12 @@ import org.zalando.problem.violations.Violation;
 public class ConstraintViolationExceptionMapper
     implements ExceptionMapper<ConstraintViolationException> {
 
+  private static final Logger LOGGER = Logger.getLogger(ConstraintViolationExceptionMapper.class);
+
   @Override
   public Response toResponse(final ConstraintViolationException exception) {
+    LOGGER.debug("Mapping " + exception, exception);
+
     final List<Violation> violations =
         exception.getConstraintViolations().stream()
             .map(c -> new Violation(c.getPropertyPath().toString(), c.getMessage()))

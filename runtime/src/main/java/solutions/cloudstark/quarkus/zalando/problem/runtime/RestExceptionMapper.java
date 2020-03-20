@@ -24,6 +24,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
+import org.jboss.logging.Logger;
 import org.zalando.problem.Problem;
 import org.zalando.problem.ProblemBuilder;
 import org.zalando.problem.Status;
@@ -33,6 +34,8 @@ import org.zalando.problem.ThrowableProblem;
 public class RestExceptionMapper implements ExceptionMapper<Throwable> {
 
   static final String HTTP_METHOD_KEY = "http_method";
+
+  private static final Logger LOGGER = Logger.getLogger(RestExceptionMapper.class);
 
   @Context HttpServerRequest request;
 
@@ -56,6 +59,8 @@ public class RestExceptionMapper implements ExceptionMapper<Throwable> {
 
   @Override
   public Response toResponse(final Throwable throwable) {
+    LOGGER.debug("Mapping " + throwable, throwable);
+
     final Optional<ThrowableProblem> optionalCausalChain = createCausalChain(throwable);
 
     final ProblemBuilder problemBuilder =

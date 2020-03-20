@@ -28,6 +28,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
+import org.jboss.logging.Logger;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
 
@@ -39,12 +40,16 @@ public class NotAllowedExceptionMapper implements ExceptionMapper<NotAllowedExce
 
   static final String HTTP_HEADER_ALLOW = "Allow";
 
+  private static final Logger LOGGER = Logger.getLogger(NotAllowedExceptionMapper.class);
+
   @Context HttpServerRequest request;
 
   @Context UriInfo uriInfo;
 
   @Override
   public Response toResponse(final NotAllowedException exception) {
+    LOGGER.debug("Mapping " + exception, exception);
+
     final Problem throwableProblem =
         Problem.builder()
             .withStatus(Status.METHOD_NOT_ALLOWED)

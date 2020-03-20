@@ -28,6 +28,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
+import org.jboss.logging.Logger;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
 
@@ -35,12 +36,16 @@ import org.zalando.problem.Status;
 @Priority(Priorities.USER)
 public class ForbiddenExceptionMapper implements ExceptionMapper<ForbiddenException> {
 
+  private static final Logger LOGGER = Logger.getLogger(ForbiddenExceptionMapper.class);
+
   @Context HttpServerRequest request;
 
   @Context UriInfo uriInfo;
 
   @Override
   public Response toResponse(final ForbiddenException exception) {
+    LOGGER.debug("Mapping " + exception, exception);
+
     final Problem throwableProblem =
         Problem.builder()
             .withStatus(Status.FORBIDDEN)
