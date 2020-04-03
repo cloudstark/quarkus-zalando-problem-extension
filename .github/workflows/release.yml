@@ -30,9 +30,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Setup Java 1.8
-        uses: joschi/setup-jdk@v1.0.0
+        uses: joschi/setup-jdk@9dc354d4a8f5781ba8880dc9e6a7bdcc7845e3e7
         with:
-          java-version: 'openjdk8'
+          java-version: '8'
       - name: Setup cache
         uses: actions/cache@v1
         with:
@@ -63,9 +63,9 @@ jobs:
       - name: Export project version
         uses: ./.github/actions/export-project-version
       - name: Setup Java 1.8
-        uses: joschi/setup-jdk@v1.0.0
+        uses: joschi/setup-jdk@9dc354d4a8f5781ba8880dc9e6a7bdcc7845e3e7
         with:
-          java-version: 'openjdk8'
+          java-version: '8'
       - name: Setup cache
         uses: actions/cache@v1
         with:
