@@ -28,13 +28,15 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
+import org.jboss.logging.Logger;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
-import org.zalando.problem.ThrowableProblem;
 
 @Provider
 @Priority(Priorities.USER)
 public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundException> {
+
+  private static final Logger LOGGER = Logger.getLogger(NotFoundExceptionMapper.class);
 
   @Context HttpServerRequest request;
 
@@ -42,7 +44,9 @@ public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundExceptio
 
   @Override
   public Response toResponse(final NotFoundException exception) {
-    final ThrowableProblem throwableProblem =
+    LOGGER.debug("Mapping " + exception, exception);
+
+    final Problem throwableProblem =
         Problem.builder()
             .withStatus(Status.NOT_FOUND)
             .withTitle(exception.getMessage())
@@ -50,6 +54,7 @@ public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundExceptio
             .with(HTTP_METHOD_KEY, request.rawMethod())
             .withInstance(URI.create(uriInfo.getPath()))
             .build();
+
     return Response.status(throwableProblem.getStatus().getStatusCode())
         .type(MediaType.APPLICATION_PROBLEM_JSON)
         .entity(throwableProblem)
