@@ -22,7 +22,7 @@
   <parent>
     <groupId>solutions.cloudstark.quarkus</groupId>
     <artifactId>quarkus-zalando-problem-parent</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>1.0.0</version>
   </parent>
 
   <artifactId>quarkus-zalando-problem</artifactId>
