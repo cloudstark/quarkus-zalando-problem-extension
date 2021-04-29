@@ -1,0 +1,96 @@
+version: 2
+updates:
+- package-ecosystem: maven
+  directory: "/."
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: io.quarkus:quarkus-maven-plugin
+    versions:
+    - 1.11.1.Final
+    - 1.11.2.Final
+    - 1.11.3.Final
+    - 1.12.0.Final
+    - 1.12.1.Final
+    - 1.12.2.Final
+    - 1.13.0.Final
+    - 1.13.1.Final
+    - 1.13.2.Final
+  - dependency-name: io.quarkus:quarkus-bootstrap-maven-plugin
+    versions:
+    - 1.11.1.Final
+    - 1.11.2.Final
+    - 1.11.3.Final
+    - 1.12.0.Final
+    - 1.12.1.Final
+    - 1.12.2.Final
+    - 1.13.0.Final
+    - 1.13.1.Final
+    - 1.13.2.Final
+  - dependency-name: io.quarkus:quarkus-junit5-internal
+    versions:
+    - 1.11.1.Final
+    - 1.11.2.Final
+    - 1.11.3.Final
+    - 1.12.0.Final
+    - 1.12.1.Final
+    - 1.12.2.Final
+    - 1.13.0.Final
+    - 1.13.1.Final
+    - 1.13.2.Final
+  - dependency-name: io.quarkus:quarkus-jsonb-spi
+    versions:
+    - 1.11.1.Final
+    - 1.11.2.Final
+    - 1.11.3.Final
+    - 1.12.0.Final
+    - 1.12.1.Final
+    - 1.12.2.Final
+    - 1.13.0.Final
+    - 1.13.1.Final
+    - 1.13.2.Final
+  - dependency-name: io.quarkus:quarkus-arc-deployment
+    versions:
+    - 1.11.1.Final
+    - 1.11.2.Final
+    - 1.11.3.Final
+    - 1.12.0.Final
+    - 1.12.1.Final
+    - 1.12.2.Final
+    - 1.13.0.Final
+    - 1.13.1.Final
+    - 1.13.2.Final
+  - dependency-name: io.quarkus:quarkus-resteasy-common-deployment
+    versions:
+    - 1.11.1.Final
+    - 1.11.2.Final
+    - 1.11.3.Final
+    - 1.12.0.Final
+    - 1.12.1.Final
+    - 1.12.2.Final
+    - 1.13.0.Final
+    - 1.13.1.Final
+    - 1.13.2.Final
+  - dependency-name: io.quarkus:quarkus-core-deployment
+    versions:
+    - 1.11.1.Final
+    - 1.11.2.Final
+    - 1.11.3.Final
+    - 1.12.0.Final
+    - 1.12.1.Final
+    - 1.12.2.Final
+    - 1.13.0.Final
+    - 1.13.1.Final
+    - 1.13.2.Final
+  - dependency-name: io.quarkus:quarkus-bom
+    versions:
+    - 1.11.1.Final
+    - 1.11.2.Final
+    - 1.11.3.Final
+    - 1.12.0.Final
+    - 1.12.1.Final
+    - 1.12.2.Final
+    - 1.13.0.Final
+    - 1.13.1.Final
+    - 1.13.2.Final
