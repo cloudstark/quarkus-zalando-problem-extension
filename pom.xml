@@ -68,7 +68,7 @@
     <quarkus.platform.version>1.5.2.Final</quarkus.platform.version>
     <tidy-maven-plugin.version>1.1.0</tidy-maven-plugin.version>
     <zalando-problem-violations.version>0.25.2</zalando-problem-violations.version>
-    <zalando-problem.version>0.24.0</zalando-problem.version>
+    <zalando-problem.version>0.26.0</zalando-problem.version>
   </properties>
 
   <dependencyManagement>
