@@ -65,7 +65,7 @@
     <quarkus-plugin.version>1.5.2.Final</quarkus-plugin.version>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-    <quarkus.platform.version>1.5.2.Final</quarkus.platform.version>
+    <quarkus.platform.version>2.0.3.Final</quarkus.platform.version>
     <tidy-maven-plugin.version>1.1.0</tidy-maven-plugin.version>
     <zalando-problem-violations.version>0.25.2</zalando-problem-violations.version>
     <zalando-problem.version>0.24.0</zalando-problem.version>
