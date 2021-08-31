@@ -56,7 +56,7 @@ public class NotAllowedExceptionMapper implements ExceptionMapper<NotAllowedExce
             .withTitle(exception.getMessage())
             .withDetail(exception.toString())
             .withInstance(URI.create(uriInfo.getPath()))
-            .with(HTTP_METHOD_KEY, request.rawMethod())
+            .with(HTTP_METHOD_KEY, request.method().toString())
             .with(HTTP_ALLOWED_METHODS_KEY, exception.getResponse().getAllowedMethods())
             .build();
 
