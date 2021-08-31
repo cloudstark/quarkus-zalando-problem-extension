@@ -51,7 +51,7 @@ public class UnauthorizedExceptionMapper implements ExceptionMapper<Unauthorized
             .withStatus(Status.UNAUTHORIZED)
             .withTitle(exception.getMessage())
             .withDetail(exception.toString())
-            .with(HTTP_METHOD_KEY, request.rawMethod())
+            .with(HTTP_METHOD_KEY, request.method().toString())
             .withInstance(URI.create(uriInfo.getPath()))
             .build();
 

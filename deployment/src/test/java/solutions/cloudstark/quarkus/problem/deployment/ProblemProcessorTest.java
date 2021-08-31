@@ -9,6 +9,6 @@ class ProblemProcessorTest {
 
   @Test
   void createFeatureItem() {
-    Assertions.assertNotNull(PROBLEM_PROCESSOR.createFeatureItem().getInfo());
+    Assertions.assertNotNull(PROBLEM_PROCESSOR.createFeatureItem().getName());
   }
 }

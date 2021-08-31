@@ -68,7 +68,7 @@ public class RestExceptionMapper implements ExceptionMapper<Throwable> {
             .withStatus(Status.INTERNAL_SERVER_ERROR)
             .withTitle(throwable.getMessage())
             .withDetail(throwable.toString())
-            .with(HTTP_METHOD_KEY, request.rawMethod())
+            .with(HTTP_METHOD_KEY, request.method().toString())
             .withInstance(URI.create(uriInfo.getPath()));
     optionalCausalChain.ifPresent(problemBuilder::withCause);
 
