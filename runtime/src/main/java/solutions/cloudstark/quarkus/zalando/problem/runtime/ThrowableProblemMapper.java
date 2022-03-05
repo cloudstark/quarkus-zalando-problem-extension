@@ -30,7 +30,7 @@ import org.zalando.problem.ThrowableProblem;
 @Provider
 public class ThrowableProblemMapper implements ExceptionMapper<ThrowableProblem> {
 
-  private static final Logger LOGGER = Logger.getLogger(ConstraintViolationExceptionMapper.class);
+  private static final Logger LOGGER = Logger.getLogger(ThrowableProblemMapper.class);
 
   @Override
   public Response toResponse(final ThrowableProblem throwableProblem) {
