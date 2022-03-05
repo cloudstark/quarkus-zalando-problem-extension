@@ -14,12 +14,10 @@
   ~    See the License for the specific language governing permissions and
   ~    limitations under the License.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>solutions.cloudstark.quarkus</groupId>
+  <groupId>com.ismailbaskin.quarkus</groupId>
   <artifactId>quarkus-zalando-problem-parent</artifactId>
   <version>1.1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
@@ -30,7 +28,7 @@
     <license>
       <distribution>repo</distribution>
       <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
     </license>
   </licenses>
 
@@ -90,6 +88,9 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>${maven-source-plugin.version}</version>
         <executions>
           <execution>
             <goals>
@@ -98,18 +99,15 @@
             <id>attach-sources</id>
           </execution>
         </executions>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <version>${maven-source-plugin.version}</version>
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven-surefire-plugin.version}</version>
         <configuration>
           <systemProperties>
             <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
           </systemProperties>
         </configuration>
-        <version>${maven-surefire-plugin.version}</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -128,6 +126,20 @@
           <printFailingErrors>true</printFailingErrors>
           <linkXRef>false</linkXRef>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>tidy-maven-plugin</artifactId>
+        <version>${tidy-maven-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>validate</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>com.github.spotbugs</groupId>
