@@ -24,6 +24,9 @@ import org.zalando.problem.Status;
 import org.zalando.problem.StatusType;
 import org.zalando.problem.ThrowableProblem;
 
+/**
+ * A {@link ExceptionMapper} for {@link Throwable}s.
+ */
 @Provider
 public class ThrowableProblemMapper implements ExceptionMapper<ThrowableProblem> {
 

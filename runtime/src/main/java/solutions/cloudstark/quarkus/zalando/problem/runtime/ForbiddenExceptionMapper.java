@@ -32,6 +32,9 @@ import org.jboss.logging.Logger;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
 
+/**
+ * Maps {@link ForbiddenException} to {@link Response}.
+ */
 @Provider
 @Priority(Priorities.USER)
 public class ForbiddenExceptionMapper implements ExceptionMapper<ForbiddenException> {

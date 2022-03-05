@@ -29,6 +29,9 @@ import org.zalando.problem.Status;
 import org.zalando.problem.violations.ConstraintViolationProblem;
 import org.zalando.problem.violations.Violation;
 
+/**
+ * Maps {@link ConstraintViolationException} to {@link Response}.
+ */
 @Provider
 @Priority(Priorities.USER)
 public class ConstraintViolationExceptionMapper

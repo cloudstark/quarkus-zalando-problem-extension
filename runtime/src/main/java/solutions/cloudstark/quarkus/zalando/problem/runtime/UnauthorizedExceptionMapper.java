@@ -32,6 +32,9 @@ import org.jboss.logging.Logger;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
 
+/**
+ * Maps {@link UnauthorizedException} to {@link Response}.
+ */
 @Provider
 @Priority(Priorities.USER)
 public class UnauthorizedExceptionMapper implements ExceptionMapper<UnauthorizedException> {

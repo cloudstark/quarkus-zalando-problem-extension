@@ -39,6 +39,9 @@ import solutions.cloudstark.quarkus.zalando.problem.runtime.jsonb.ConstraintViol
 import solutions.cloudstark.quarkus.zalando.problem.runtime.jsonb.DefaultProblemSerializer;
 import solutions.cloudstark.quarkus.zalando.problem.runtime.jsonb.ViolationSerializer;
 
+/**
+ * This class is used to register the Problem serializers.
+ */
 public class ProblemProcessor {
 
   private static final String FEATURE_NAME = "zalando-problem";

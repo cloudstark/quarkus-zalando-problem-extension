@@ -30,6 +30,9 @@ import org.zalando.problem.ProblemBuilder;
 import org.zalando.problem.Status;
 import org.zalando.problem.ThrowableProblem;
 
+/**
+ * A JAX-RS ExceptionMapper that maps {@link Throwable} to {@link Problem}.
+ */
 @Provider
 public class RestExceptionMapper implements ExceptionMapper<Throwable> {
 

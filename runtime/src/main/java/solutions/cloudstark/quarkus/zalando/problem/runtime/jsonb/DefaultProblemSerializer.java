@@ -23,6 +23,9 @@ import javax.json.stream.JsonGenerator;
 import org.zalando.problem.AbstractThrowableProblem;
 import org.zalando.problem.StatusType;
 
+/**
+ * Serializes {@link AbstractThrowableProblem} instances to JSON.
+ */
 public class DefaultProblemSerializer implements JsonbSerializer<AbstractThrowableProblem> {
 
   private static final URI DEFAULT_URI = URI.create("about:blank");

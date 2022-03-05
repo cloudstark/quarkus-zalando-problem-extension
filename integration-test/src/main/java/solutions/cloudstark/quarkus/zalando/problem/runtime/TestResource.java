@@ -13,6 +13,9 @@ import javax.ws.rs.Produces;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
 
+/**
+ * Test resource.
+ */
 @Path("/test")
 @Produces(APPLICATION_JSON)
 public class TestResource {
@@ -27,6 +30,9 @@ public class TestResource {
 
   static final String IO_EXCEPTION2_MESSAGE = "This is the second io exception!";
 
+  /**
+   * The endpoint for division problems.
+   */
   @GET
   @Path("/divide/{a}/{b}")
   public int divide(
@@ -34,6 +40,9 @@ public class TestResource {
     return a / b;
   }
 
+  /**
+   * The endpoint for a RuntimeException.
+   */
   @GET
   @Path("/exception")
   public void exception() {
@@ -42,6 +51,9 @@ public class TestResource {
     throw new RuntimeException(RUNTIME_EXCEPTION_MESSAGE, cause);
   }
 
+  /**
+   * The endpoint for a Problem instance.
+   */
   @GET
   @Path("/problem")
   public void problem() {
@@ -52,6 +64,9 @@ public class TestResource {
         .build();
   }
 
+  /**
+   * The endpoint for auth problem.
+   */
   @GET
   @Path("/restricted")
   @RolesAllowed("Tester")
@@ -59,6 +74,9 @@ public class TestResource {
     return true;
   }
 
+  /**
+   * The endpoint for chained problem.
+   */
   @GET
   @Path("/chain")
   public void causalChain() {

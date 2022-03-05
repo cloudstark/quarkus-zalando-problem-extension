@@ -16,6 +16,9 @@
 
 package solutions.cloudstark.quarkus.zalando.problem.runtime;
 
+/**
+ * Media Type for problem json.
+ */
 public class MediaType {
 
   public static final String APPLICATION_PROBLEM_JSON = "application/problem+json";

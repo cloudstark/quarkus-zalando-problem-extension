@@ -23,6 +23,9 @@ import org.zalando.problem.Status;
 import org.zalando.problem.StatusType;
 import org.zalando.problem.violations.ConstraintViolationProblem;
 
+/**
+ * A {@link JsonbSerializer} for {@link ConstraintViolationProblem}.
+ */
 public class ConstraintViolationProblemSerializer
     implements JsonbSerializer<ConstraintViolationProblem> {
 

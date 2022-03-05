@@ -21,6 +21,9 @@ import javax.json.bind.serializer.SerializationContext;
 import javax.json.stream.JsonGenerator;
 import org.zalando.problem.violations.Violation;
 
+/**
+ * Serializes a {@link Violation} to JSON.
+ */
 public class ViolationSerializer implements JsonbSerializer<Violation> {
 
   @Override

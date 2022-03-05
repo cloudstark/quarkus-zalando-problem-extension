@@ -32,6 +32,9 @@ import org.jboss.logging.Logger;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
 
+/**
+ * Maps {@link NotFoundException} to {@link Response}.
+ */
 @Provider
 @Priority(Priorities.USER)
 public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundException> {
