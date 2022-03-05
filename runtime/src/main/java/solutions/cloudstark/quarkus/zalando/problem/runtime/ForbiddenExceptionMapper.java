@@ -51,7 +51,7 @@ public class ForbiddenExceptionMapper implements ExceptionMapper<ForbiddenExcept
             .withStatus(Status.FORBIDDEN)
             .withTitle(exception.getMessage())
             .withDetail(exception.toString())
-            .with(HTTP_METHOD_KEY, request.rawMethod())
+            .with(HTTP_METHOD_KEY, request.method().toString())
             .withInstance(URI.create(uriInfo.getPath()))
             .build();
 
