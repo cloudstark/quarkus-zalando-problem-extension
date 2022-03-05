@@ -55,7 +55,7 @@ public class ForbiddenExceptionMapper implements ExceptionMapper<ForbiddenExcept
             .withInstance(URI.create(uriInfo.getPath()))
             .build();
 
-    return Response.status(throwableProblem.getStatus().getStatusCode())
+    return Response.status(Status.FORBIDDEN.getStatusCode())
         .type(MediaType.APPLICATION_PROBLEM_JSON)
         .entity(throwableProblem)
         .build();

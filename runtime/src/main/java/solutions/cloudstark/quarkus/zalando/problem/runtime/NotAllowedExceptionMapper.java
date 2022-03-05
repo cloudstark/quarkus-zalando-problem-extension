@@ -60,7 +60,7 @@ public class NotAllowedExceptionMapper implements ExceptionMapper<NotAllowedExce
             .with(HTTP_ALLOWED_METHODS_KEY, exception.getResponse().getAllowedMethods())
             .build();
 
-    return Response.status(throwableProblem.getStatus().getStatusCode())
+    return Response.status(Status.METHOD_NOT_ALLOWED.getStatusCode())
         .type(MediaType.APPLICATION_PROBLEM_JSON)
         .header(HTTP_HEADER_ALLOW, String.join(", ", exception.getResponse().getAllowedMethods()))
         .entity(throwableProblem)

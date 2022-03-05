@@ -55,7 +55,7 @@ public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundExceptio
             .withInstance(URI.create(uriInfo.getPath()))
             .build();
 
-    return Response.status(throwableProblem.getStatus().getStatusCode())
+    return Response.status(Status.NOT_FOUND.getStatusCode())
         .type(MediaType.APPLICATION_PROBLEM_JSON)
         .entity(throwableProblem)
         .build();

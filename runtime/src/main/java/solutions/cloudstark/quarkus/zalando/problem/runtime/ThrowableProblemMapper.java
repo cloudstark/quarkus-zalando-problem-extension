@@ -20,6 +20,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 import org.jboss.logging.Logger;
+import org.zalando.problem.Status;
+import org.zalando.problem.StatusType;
 import org.zalando.problem.ThrowableProblem;
 
 @Provider
@@ -30,7 +32,14 @@ public class ThrowableProblemMapper implements ExceptionMapper<ThrowableProblem>
   @Override
   public Response toResponse(final ThrowableProblem throwableProblem) {
     LOGGER.debug("Mapping " + throwableProblem, throwableProblem);
-    return Response.status(throwableProblem.getStatus().getStatusCode())
+
+    StatusType status = throwableProblem.getStatus();
+    int statusCode = Status.INTERNAL_SERVER_ERROR.getStatusCode();
+    if (status != null) {
+      statusCode = status.getStatusCode();
+    }
+
+    return Response.status(statusCode)
         .type(MediaType.APPLICATION_PROBLEM_JSON)
         .entity(throwableProblem)
         .build();

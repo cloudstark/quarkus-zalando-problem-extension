@@ -74,7 +74,7 @@ public class RestExceptionMapper implements ExceptionMapper<Throwable> {
 
     final Problem problem = problemBuilder.build();
 
-    return Response.status(problem.getStatus().getStatusCode())
+    return Response.status(Status.INTERNAL_SERVER_ERROR.getStatusCode())
         .type(MediaType.APPLICATION_PROBLEM_JSON)
         .entity(problem)
         .build();

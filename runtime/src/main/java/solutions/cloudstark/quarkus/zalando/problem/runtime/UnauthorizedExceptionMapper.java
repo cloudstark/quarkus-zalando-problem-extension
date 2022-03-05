@@ -55,7 +55,7 @@ public class UnauthorizedExceptionMapper implements ExceptionMapper<Unauthorized
             .withInstance(URI.create(uriInfo.getPath()))
             .build();
 
-    return Response.status(throwableProblem.getStatus().getStatusCode())
+    return Response.status(Status.UNAUTHORIZED.getStatusCode())
         .type(MediaType.APPLICATION_PROBLEM_JSON)
         .entity(throwableProblem)
         .build();

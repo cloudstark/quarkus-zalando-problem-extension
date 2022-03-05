@@ -21,6 +21,7 @@ import javax.json.bind.serializer.JsonbSerializer;
 import javax.json.bind.serializer.SerializationContext;
 import javax.json.stream.JsonGenerator;
 import org.zalando.problem.AbstractThrowableProblem;
+import org.zalando.problem.StatusType;
 
 public class DefaultProblemSerializer implements JsonbSerializer<AbstractThrowableProblem> {
 
@@ -35,8 +36,9 @@ public class DefaultProblemSerializer implements JsonbSerializer<AbstractThrowab
     if (problem.getType() != null && !problem.getType().equals(DEFAULT_URI)) {
       generator.write("type", problem.getType().toASCIIString());
     }
-    if (problem.getStatus() != null) {
-      generator.write("status", problem.getStatus().getStatusCode());
+    StatusType status = problem.getStatus();
+    if (status != null) {
+      generator.write("status", status.getStatusCode());
     }
     if (problem.getTitle() != null) {
       generator.write("title", problem.getTitle());
@@ -44,8 +46,9 @@ public class DefaultProblemSerializer implements JsonbSerializer<AbstractThrowab
     if (problem.getDetail() != null) {
       generator.write("detail", problem.getDetail());
     }
-    if (problem.getInstance() != null) {
-      generator.write("instance", problem.getInstance().toASCIIString());
+    URI instance = problem.getInstance();
+    if (instance != null) {
+      generator.write("instance", instance.toASCIIString());
     }
     if (problem.getCause() != null) {
       ctx.serialize("cause", problem.getCause(), generator);
