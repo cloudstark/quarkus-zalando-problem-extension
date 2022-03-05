@@ -45,7 +45,7 @@ public class TestResource {
    */
   @GET
   @Path("/exception")
-  public void exception() {
+  public String exception() {
     final IOException causeOfCause = new IOException(IO_EXCEPTION2_MESSAGE);
     final IOException cause = new IOException(IO_EXCEPTION1_MESSAGE, causeOfCause);
     throw new RuntimeException(RUNTIME_EXCEPTION_MESSAGE, cause);
@@ -56,7 +56,7 @@ public class TestResource {
    */
   @GET
   @Path("/problem")
-  public void problem() {
+  public String problem() {
     throw Problem.builder()
         .withStatus(Status.BAD_REQUEST)
         .withTitle(STRANGE_PROBLEM_TITLE)
@@ -79,7 +79,7 @@ public class TestResource {
    */
   @GET
   @Path("/chain")
-  public void causalChain() {
+  public String causalChain() {
     throw Problem.builder()
         .withStatus(Status.BAD_REQUEST)
         .withTitle("Order failed")

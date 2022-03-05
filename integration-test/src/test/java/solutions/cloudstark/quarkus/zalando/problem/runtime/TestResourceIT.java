@@ -37,10 +37,10 @@ import org.junit.jupiter.api.Test;
 
 @QuarkusTest
 @DisabledOnNativeImage
-public class TestResourceIT {
+class TestResourceIT {
 
   @Test
-  public void noPath() {
+  void noPath() {
     final String path = "/some/thing/not/present/2094u294uasdf9824";
     given()
         .when()
@@ -55,12 +55,12 @@ public class TestResourceIT {
   }
 
   @Test
-  public void divideOk() {
+  void divideOk() {
     given().when().get("/test/divide/4/2").then().statusCode(OK.getStatusCode()).body(is("2"));
   }
 
   @Test
-  public void divideError() {
+  void divideError() {
     final String path = "/test/divide/4/0";
     given()
         .when()
@@ -75,7 +75,7 @@ public class TestResourceIT {
   }
 
   @Test
-  public void divideConstraintViolation() {
+  void divideConstraintViolation() {
     final String path = "/test/divide/" + (TestResource.DIVIDEND_MAX_VALUE + 1) + "/0";
     given()
         .when()
@@ -93,7 +93,7 @@ public class TestResourceIT {
   }
 
   @Test
-  public void exception() {
+  void exception() {
     final String path = "/test/exception";
     given()
         .when()
