@@ -16,18 +16,6 @@
 
 package com.ismailbaskin.quarkus.problem.deployment;
 
-import io.quarkus.deployment.annotations.BuildProducer;
-import io.quarkus.deployment.annotations.BuildStep;
-import io.quarkus.deployment.builditem.FeatureBuildItem;
-import io.quarkus.deployment.builditem.nativeimage.ReflectiveClassBuildItem;
-import io.quarkus.jsonb.spi.JsonbSerializerBuildItem;
-import io.quarkus.resteasy.common.spi.ResteasyJaxrsProviderBuildItem;
-import java.util.Arrays;
-import java.util.List;
-import javax.ws.rs.ext.ExceptionMapper;
-import org.zalando.problem.DefaultProblem;
-import org.zalando.problem.violations.ConstraintViolationProblem;
-import org.zalando.problem.violations.Violation;
 import com.ismailbaskin.quarkus.zalando.problem.runtime.ConstraintViolationExceptionMapper;
 import com.ismailbaskin.quarkus.zalando.problem.runtime.ForbiddenExceptionMapper;
 import com.ismailbaskin.quarkus.zalando.problem.runtime.NotAllowedExceptionMapper;
@@ -38,6 +26,22 @@ import com.ismailbaskin.quarkus.zalando.problem.runtime.UnauthorizedExceptionMap
 import com.ismailbaskin.quarkus.zalando.problem.runtime.jsonb.ConstraintViolationProblemSerializer;
 import com.ismailbaskin.quarkus.zalando.problem.runtime.jsonb.DefaultProblemSerializer;
 import com.ismailbaskin.quarkus.zalando.problem.runtime.jsonb.ViolationSerializer;
+import io.quarkus.deployment.annotations.BuildProducer;
+import io.quarkus.deployment.annotations.BuildStep;
+import io.quarkus.deployment.builditem.FeatureBuildItem;
+import io.quarkus.deployment.builditem.nativeimage.ReflectiveClassBuildItem;
+import io.quarkus.jackson.spi.ClassPathJacksonModuleBuildItem;
+import io.quarkus.jsonb.spi.JsonbSerializerBuildItem;
+import io.quarkus.resteasy.common.spi.ResteasyJaxrsProviderBuildItem;
+import java.util.Arrays;
+import java.util.List;
+import javax.ws.rs.ext.ExceptionMapper;
+import org.zalando.problem.DefaultProblem;
+import org.zalando.problem.Problem;
+import org.zalando.problem.jackson.ProblemModule;
+import org.zalando.problem.violations.ConstraintViolationProblem;
+import org.zalando.problem.violations.ConstraintViolationProblemModule;
+import org.zalando.problem.violations.Violation;
 
 /**
  * This class is used to register the Problem serializers.
@@ -48,13 +52,13 @@ public class ProblemProcessor {
 
   private static final List<Class<? extends ExceptionMapper<?>>> EXCEPTION_MAPPER_CLASSES =
       Arrays.asList(
-          ConstraintViolationExceptionMapper.class,
-          ForbiddenExceptionMapper.class,
-          NotAllowedExceptionMapper.class,
-          NotFoundExceptionMapper.class,
-          UnauthorizedExceptionMapper.class,
-          ThrowableProblemMapper.class,
-          RestExceptionMapper.class);
+      ConstraintViolationExceptionMapper.class,
+      ForbiddenExceptionMapper.class,
+      NotAllowedExceptionMapper.class,
+      NotFoundExceptionMapper.class,
+      UnauthorizedExceptionMapper.class,
+      ThrowableProblemMapper.class,
+      RestExceptionMapper.class);
 
   @BuildStep
   FeatureBuildItem createFeatureItem() {
@@ -65,24 +69,35 @@ public class ProblemProcessor {
   void registerReflectiveClasses(final BuildProducer<ReflectiveClassBuildItem> reflectives) {
     reflectives.produce(
         ReflectiveClassBuildItem.builder(
-                DefaultProblem.class, ConstraintViolationProblem.class, Violation.class)
-            .build());
+          Problem.class, DefaultProblem.class, ConstraintViolationProblem.class, Violation.class)
+          .methods(true)
+        .build());
+  }
+
+  @BuildStep
+  void registerProblemModule(final BuildProducer<ClassPathJacksonModuleBuildItem> serializers) {
+    serializers.produce(
+      new ClassPathJacksonModuleBuildItem(ProblemModule.class.getName())
+    );
+    serializers.produce(
+      new ClassPathJacksonModuleBuildItem(ConstraintViolationProblemModule.class.getName())
+    );
   }
 
   @BuildStep
   void registerJsonbSerializers(final BuildProducer<JsonbSerializerBuildItem> serializers) {
     serializers.produce(
-        new JsonbSerializerBuildItem(
-            Arrays.asList(
-                DefaultProblemSerializer.class.getName(),
-                ViolationSerializer.class.getName(),
-                ConstraintViolationProblemSerializer.class.getName())));
+      new JsonbSerializerBuildItem(
+        Arrays.asList(
+          DefaultProblemSerializer.class.getName(),
+          ViolationSerializer.class.getName(),
+          ConstraintViolationProblemSerializer.class.getName())));
   }
 
   @BuildStep
   void registerJaxRsProviders(final BuildProducer<ResteasyJaxrsProviderBuildItem> providers) {
     EXCEPTION_MAPPER_CLASSES.forEach(
         exceptionMapper ->
-            providers.produce(new ResteasyJaxrsProviderBuildItem(exceptionMapper.getName())));
+          providers.produce(new ResteasyJaxrsProviderBuildItem(exceptionMapper.getName())));
   }
 }

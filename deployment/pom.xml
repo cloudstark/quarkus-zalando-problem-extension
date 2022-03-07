@@ -50,6 +50,11 @@
       <version>${quarkus.platform.version}</version>
     </dependency>
     <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-jackson-spi</artifactId>
+      <version>${quarkus.platform.version}</version>
+    </dependency>
+    <dependency>
       <groupId>com.ismailbaskin.quarkus</groupId>
       <artifactId>quarkus-zalando-problem</artifactId>
       <version>${project.version}</version>
