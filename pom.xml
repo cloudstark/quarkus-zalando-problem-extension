@@ -17,12 +17,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.ismailbaskin.quarkus</groupId>
+  <groupId>io.github.ismailbaskin.quarkus</groupId>
   <artifactId>quarkus-zalando-problem-parent</artifactId>
-  <version>${revision}</version>
+  <version>1.1.0</version>
   <packaging>pom</packaging>
 
   <name>Quarkus - Zalando Problem (RFC7807) Parent</name>
+  <description>quarkus-zalando-problem-parent</description>
+  <url>https://www.convertapi.com/</url>
   <inceptionYear>2020</inceptionYear>
   <licenses>
     <license>
@@ -32,27 +34,37 @@
     </license>
   </licenses>
 
+  <developers>
+    <developer>
+      <id>ismailbaskin</id>
+      <name>Ismail Baskin</name>
+    </developer>
+  </developers>
+
   <modules>
     <module>runtime</module>
     <module>deployment</module>
     <module>integration-test</module>
   </modules>
 
+  <scm>
+    <connection>scm:git:git@github.com:ruchi-kansara/quarkus-zalando-problem-extension.git</connection>
+    <developerConnection>scm:git:ssh://github.com:ruchi-kansara/quarkus-zalando-problem-extension.git</developerConnection>
+    <url>https://github.com/ismailbaskin/quarkus-zalando-problem-extension</url>
+  </scm>
   <distributionManagement>
-    <repository>
-      <id>bintray-cloudstark-maven</id>
-      <name>cloudstark-maven</name>
-      <url>https://api.bintray.com/maven/cloudstark/maven/quarkus-zalando-problem/;publish=1</url>
-    </repository>
     <snapshotRepository>
-      <id>oss-jfrog-artifactory</id>
-      <name>oss-jfrog-artifactory-snapshots</name>
-      <url>https://oss.jfrog.org/artifactory/oss-snapshot-local</url>
+      <id>ossrh</id>
+      <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
   </distributionManagement>
 
   <properties>
-    <revision>1.1.0-SNAPSHOT</revision>
+    <revision>1.1.0</revision>
     <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
     <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
     <maven.compiler-plugin.version>3.8.1</maven.compiler-plugin.version>
@@ -88,6 +100,63 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.12</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.5</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+            <configuration>
+              <gpgArguments>
+                <arg>--pinentry-mode</arg>
+                <arg>loopback</arg>
+              </gpgArguments>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.2.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.9.1</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>

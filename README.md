@@ -26,7 +26,7 @@ Add the following dependency to your `pom.xml`:
 
 ```xml
 <dependency>
-      <groupId>com.ismailbaskin.quarkus</groupId>
+      <groupId>io.github.ismailbaskin.quarkus</groupId>
       <artifactId>quarkus-zalando-problem</artifactId>
       <version>0.0.2-SNAPSHOT</version>
 </dependency>
